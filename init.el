@@ -1,12 +1,17 @@
 ;; startup
 (add-to-list 'load-path "~/.emacs.d/lisp")
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-(setq custom-file "custom.el")
+(setq-default custom-file "~/fastemacs/custom.el")
 (load custom-file)
 (add-to-list 'default-frame-alist
 			 `(font . "IosevkaFixed Nerd Font Extended 13"))
 (add-to-list 'default-frame-alist `(fullscreen . maximized))
 (load-theme 'gruber-darker t)
+(setq ring-bell-function 'ignore)
+(setq url-proxy-services '(
+						   ("http"  .  "127.0.0.1:12334")
+						   ("https" .  "127.0.0.1:12334"))
+	  )
 
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
@@ -58,15 +63,20 @@
 (setq treesit-font-lock-level 2)
 (setq imenu-flatten 'annotation)
 
+;; compilation
+(add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
+
+;; marginalia
+(marginalia-mode 1)
+
+
 ;;modeline
 (setq-default mode-line-format '("%e" mode-line-front-space
 								 (:propertize
 								  ("" mode-line-mule-info mode-line-client
 								   mode-line-modified
-								   mode-line-remote mode-line-window-dedicated)
-								  display (min-width (6.0)))
-								 mode-line-frame-identification
-								 mode-line-buffer-identification
+								   mode-line-remote mode-line-window-dedicated))
+								 "  %b"
 								 "  "
 								 (project-mode-line project-mode-line-format)
 								 (vc-mode vc-mode)
@@ -79,8 +89,20 @@
   "Move up a directory (delete backwards to /)."
   (interactive "p")
   (if (string-match-p "/." (minibuffer-contents))
-	  (zap-up-to-char (- arg) ?/)
-	(delete-minibuffer-contents)))
+      (delete-region (point)
+		     (progn
+		       (forward-char -1)
+		       (unwind-protect
+		           (search-forward "/" nil nil (- arg))
+		         (backward-char -1))
+		       (point)))
+    (delete-minibuffer-contents)
+    )
+  )
+
+
+;; project
+(setq project-file-history-behavior 'relativize)
 
 ;; c-ts-mode
 (require 'c-ts-mode)
@@ -107,5 +129,8 @@
 (keymap-set minibuffer-local-filename-completion-map
 			"C-l" #'up-directory)
 (global-set-key (kbd "C-x C-/") 'goto-last-change)
+(keymap-set icomplete-minibuffer-map "RET" 'icomplete-fido-exit)
+(global-set-key (kbd "<f5>") 'compile)
+(global-set-key (kbd "RET") 'newline-and-indent)
 
 (load "packages.el")
