@@ -4,9 +4,11 @@
 (setq package-install-upgrade-built-in t)
 (require 'use-package)
 
+(setq use-package-always-ensure t)
+
 ;; markdown-mode
 (use-package markdown-mode
-  :ensure t
+  :defer t
   :mode ("README\\.md\\'" . gfm-mode)
   :init (setq markdown-command "pandoc"))
 
@@ -26,6 +28,7 @@
   (global-corfu-mode))
 
 (use-package org
+  :defer t
   :init
   (setq org-startup-folded t)
   (setq org-startup-truncated nil)
@@ -54,10 +57,3 @@
   (add-hook 'completion-at-point-functions #'cape-dabbrev)
   (add-hook 'completion-at-point-functions #'cape-file)
   (add-hook 'completion-at-point-functions #'cape-elisp-block))
-
-(use-package yaml-mode
-  :ensure t)
-
-(use-package move-text
-  :ensure t)
-

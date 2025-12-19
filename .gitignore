@@ -2,3 +2,5 @@
 !*.el
 !lisp/
 !themes/
+!elpa/
+!tree-sitter/

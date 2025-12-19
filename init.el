@@ -12,6 +12,7 @@
 						   ("http"  .  "127.0.0.1:12334")
 						   ("https" .  "127.0.0.1:12334"))
 	  )
+(setq recenter-redisplay nil)
 
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
@@ -28,6 +29,7 @@
 (setq-default tab-width 4)
 (setq-default bidi-paragraph-direction 'left-to-right)
 (setq enable-recursize-minibuffers t)
+(setq shell-command-with-editor-mode t)
 
 (require 'tramp)
 (setq tramp-terminal-type "dumb")
@@ -69,7 +71,6 @@
 ;; marginalia
 (marginalia-mode 1)
 
-
 ;;modeline
 (setq-default mode-line-format '("%e" mode-line-front-space
 								 (:propertize
@@ -100,6 +101,8 @@
     )
   )
 
+;; magit
+(setq magit-commit-show-diff nil)
 
 ;; project
 (setq project-file-history-behavior 'relativize)
@@ -132,5 +135,8 @@
 (keymap-set icomplete-minibuffer-map "RET" 'icomplete-fido-exit)
 (global-set-key (kbd "<f5>") 'compile)
 (global-set-key (kbd "RET") 'newline-and-indent)
+(global-set-key (kbd "C-x C-b") 'switch-to-buffer)
+(global-set-key (kbd "M-p")  'move-text-up)
+(global-set-key (kbd "M-n")  'move-text-down)
 
 (load "packages.el")
