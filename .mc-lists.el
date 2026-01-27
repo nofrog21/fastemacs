@@ -3,9 +3,10 @@
 
 (setq mc/cmds-to-run-for-all
       '(
-		))
+        untabify
+        ))
 
 (setq mc/cmds-to-run-once
       '(
-		end-of-buffer
-		))
+        end-of-buffer
+        ))
