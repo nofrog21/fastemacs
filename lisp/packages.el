@@ -64,6 +64,6 @@
   (marginalia-mode 1))
 
 (use-package magit
-  :ensure t)
+  :defer t)
 
 (load "goto-last-change.elc")
