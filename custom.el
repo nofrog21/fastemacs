@@ -10,7 +10,9 @@
  '(package-selected-packages
    '(cape corfu go-mode lua-mode magit marginalia markdown-mode move-text
           multiple-cursors rainbow-mode rust-mode yaml-mode))
- '(project-file-history-behavior 'relativize)
+ '(project-file-history-behavior 'relativize t)
+ '(uxntal-uxnasm-path "uxn2 /home/ivan/opt/uxn2/etc/utils/drifblim.rom")
+ '(uxntal-uxnemu-path "uxn2")
  '(whitespace-style
    '(face trailing tabs spaces space-before-tab space-mark tab-mark))
  '(with-editor-sleeping-editor

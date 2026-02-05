@@ -1,13 +1,5 @@
-;; startup
-(add-to-list 'load-path "~/.emacs.d/lisp")
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-(setq-default custom-file "~/fastemacs/custom.el")
 (load custom-file)
 (load "packages.el")
-(add-to-list 'default-frame-alist
-	         `(font . "IosevkaFixed Nerd Font Extended 13"))
-(add-to-list 'default-frame-alist `(fullscreen . maximized))
-(load-theme 'gruber-darker t)
 (setq ring-bell-function 'ignore)
 (setq url-proxy-services '(
 			               ("http"  .  "127.0.0.1:10808")
@@ -15,14 +7,13 @@
       )
 (setq recenter-redisplay nil)
 
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-(menu-bar-mode -1)
+;;; savehist-mode
 (savehist-mode 1)
 
-(global-whitespace-mode 1)
+;;; whitespace-mode
+(add-hook 'prog-mode-hook (lambda () (global-whitespace-mode 1)))
 
-;; globals
+;;; globals
 (setq inhibit-splash-screen t)
 (setq inhibit-startup-message t)
 (setq make-backup-files nil)
@@ -36,7 +27,7 @@
 (setq shell-command-with-editor-mode t)
 (setq align-to-tab-stop nil)
 
-(require 'tramp)
+;;; trump
 (setq tramp-terminal-type "dumb")
 (when (eq system-type 'windows-nt)
   (setq tramp-default-method "plink"))
@@ -44,7 +35,7 @@
       tramp-use-scp-direct-remote-copying t
       remote-file-name-inhibit-auto-save-visited t)
 
-;; completions
+;;; completions
 (icomplete-vertical-mode 1)
 (keymap-set icomplete-minibuffer-map "TAB" #'icomplete-force-complete)
 (setq completion-category-overrides
@@ -65,18 +56,16 @@
 (add-to-list 'completion-ignored-extensions "./")
 (add-to-list 'completion-ignored-extensions "../")
 
+;;; misc
 (setq dired-listing-switches "-Alh")
 (setq font-lock-maximum-deciration 2)
 (setq treesit-font-lock-level 2)
 (setq imenu-flatten 'annotation)
 
-;; compilation
+;;; compilation
 (add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
 
-;; marginalia
-(marginalia-mode 1)
-
-;;modeline
+;;; modeline
 (setq-default mode-line-format '("%e" mode-line-front-space
 				                 (:propertize
 				                  ("" mode-line-mule-info mode-line-client
@@ -106,21 +95,21 @@
     )
   )
 
-;; magit
+;;; magit
 (setq magit-commit-show-diff nil)
 
-;; project
+;;; project
 (setq project-file-history-behavior 'relativize)
 
-;; c-ts-mode
-(require 'c-ts-mode)
-(setq major-mode-remap-alist '((c++-mode . c++-ts-mode)))
-(add-hook 'after-change-major-mode-hook (lambda () (electric-indent-mode -1)))
-(setq-default c-ts-mode-indent-offset 4)
-(add-hook 'c-ts-mode-hook   (lambda () (setq-local indent-tabs-mode nil)))
-(add-hook 'c++-ts-mode-hook (lambda () (setq-local indent-tabs-mode nil)))
+;;; c-ts-mode
+;;(require 'c-ts-mode)
+;;(setq major-mode-remap-alist '((c++-mode . c++-ts-mode)))
+;;(setq-default c-ts-mode-indent-offset 4)
+;;(add-hook 'c-ts-mode-hook   (lambda () (setq-local indent-tabs-mode nil)))
+;;(add-hook 'c++-ts-mode-hook (lambda () (setq-local indent-tabs-mode nil)))
 
 ;; c-mode
+(add-hook 'after-change-major-mode-hook (lambda () (electric-indent-mode -1)))
 (setq-default c-basic-offset tab-width)
 (c-add-style "openbsd"
               '("bsd"
@@ -136,13 +125,13 @@
                 (indent-tabs-mode . t)))
 (setq-default c-default-style "openbsd")
 
-;; buffer names
+;;; buffer names
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'nil)
 
 (setq isearch-repeat-on-direction-change t)
 
-;; keybindings
+;;; keybindings
 (keymap-set minibuffer-local-filename-completion-map
 	        "C-l" #'up-directory)
 (global-set-key (kbd "C-x C-/") 'goto-last-change)

@@ -3,6 +3,11 @@
 
 (setq mc/cmds-to-run-for-all
       '(
+        c-electric-delete-forward
+        c-electric-paren
+        c-electric-semi&comma
+        c-electric-star
+        mark-sexp
         untabify
         ))
 
