@@ -5,6 +5,7 @@
 (add-to-list 'default-frame-alist
 	     `(font . "IosevkaFixed Nerd Font Extended 13"))
 (add-to-list 'default-frame-alist `(fullscreen . maximized))
+(set-language-environment "UTF-8")
 (setq inhibit-splash-screen t)
 (setq inhibit-startup-message t)
 (setq native-comp-speed 2)

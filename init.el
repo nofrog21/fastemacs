@@ -1,5 +1,6 @@
 (load custom-file)
 (load "packages.el")
+(load "custom-lisp.el")
 (setq ring-bell-function 'ignore)
 (setq url-proxy-services '(
 			               ("http"  .  "127.0.0.1:10808")
@@ -11,7 +12,7 @@
 (savehist-mode 1)
 
 ;;; whitespace-mode
-(add-hook 'prog-mode-hook (lambda () (global-whitespace-mode 1)))
+(add-hook 'prog-mode-hook (lambda () (whitespace-mode 1)))
 
 ;;; globals
 (setq inhibit-splash-screen t)
@@ -23,7 +24,7 @@
 (setq-default tab-width 8)
 (setq-default indent-tabs-mode nil)
 (setq-default bidi-paragraph-direction 'left-to-right)
-(setq enable-recursize-minibuffers t)
+(setq enable-recursive-minibuffers t)
 (setq shell-command-with-editor-mode t)
 (setq align-to-tab-stop nil)
 
@@ -64,6 +65,7 @@
 
 ;;; compilation
 (add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
+(setq compilation-scroll-output 'first-error)
 
 ;;; modeline
 (setq-default mode-line-format '("%e" mode-line-front-space
@@ -79,21 +81,6 @@
 				                 mode-name
 				                 mode-line-process
 				                 mode-line-end-spaces))
-
-(defun up-directory (arg)
-  "Move up a directory (delete backwards to /)."
-  (interactive "p")
-  (if (string-match-p "/." (minibuffer-contents))
-      (delete-region (point)
-		             (progn
-		               (forward-char -1)
-		               (unwind-protect
-			               (search-forward "/" nil nil (- arg))
-			             (backward-char -1))
-		               (point)))
-    (delete-minibuffer-contents)
-    )
-  )
 
 ;;; magit
 (setq magit-commit-show-diff nil)
