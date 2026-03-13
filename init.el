@@ -96,7 +96,10 @@
 ;;(add-hook 'c++-ts-mode-hook (lambda () (setq-local indent-tabs-mode nil)))
 
 ;; c-mode
-(add-hook 'after-change-major-mode-hook (lambda () (electric-indent-mode -1)))
+;;(add-hook 'after-change-major-mode-hook (lambda () (electric-indent-mode -1)))
+(require 'cc-mode)
+(add-hook 'c-mode-hook (lambda () (electric-indent-mode 0)))
+(add-hook 'c++-mode-hook (lambda () (electric-indent-mode 0)))
 (setq-default c-basic-offset tab-width)
 (c-add-style "openbsd"
               '("bsd"
