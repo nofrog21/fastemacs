@@ -88,15 +88,11 @@
 ;;; project
 (setq project-file-history-behavior 'relativize)
 
-;;; c-ts-mode
-;;(require 'c-ts-mode)
-;;(setq major-mode-remap-alist '((c++-mode . c++-ts-mode)))
-;;(setq-default c-ts-mode-indent-offset 4)
-;;(add-hook 'c-ts-mode-hook   (lambda () (setq-local indent-tabs-mode nil)))
-;;(add-hook 'c++-ts-mode-hook (lambda () (setq-local indent-tabs-mode nil)))
+;;; rust-mode
 
-;; c-mode
-(add-hook 'after-change-major-mode-hook (lambda () (electric-indent-mode -1)))
+;;; c-mode
+(add-hook 'c-mode-hook (lambda () (electric-indent-mode -1)))
+(add-hook 'c++-mode-hook (lambda () (electric-indent-mode -1)))
 (setq-default c-basic-offset tab-width)
 (c-add-style "openbsd"
               '("bsd"

@@ -27,6 +27,16 @@
   :config
   (global-corfu-mode))
 
+(use-package eglot
+  :config
+  (add-to-list 'eglot-server-programs '((c++-mode c-mode) . ("clangd")))
+  (add-to-list 'eglot-server-programs '((rust-mode) . ("rust-analyzer")))
+  (setq eglot-ignored-server-capabilities '(:documentOnTypeFormattingProvider
+                                            :signatureHelpProvider
+                                            :documentHighlightProvider
+                                            :documentFormattingProvider
+                                            :inlayHintProvider)))
+
 (use-package org
   :defer t
   :init
@@ -37,6 +47,8 @@
   (global-set-key (kbd "C-c a") #'org-agenda)
   (global-set-key (kbd "C-c c") #'org-capture)
   (global-set-key (kbd "C-c C") #'org-capture-goto-last-stored))
+
+
 
 (use-package dabbrev
   :bind (("C-M-/"   . #'cape-dabbrev)
@@ -52,11 +64,13 @@
 
 (use-package cape
   :ensure t
-  :bind ("C-c p" . cape-prefix-map)
+  :bind (("C-c p" . cape-prefix-map)
+         ("M-TAB" . completion-at-point))
   :init
-  (add-hook 'completion-at-point-functions #'cape-dabbrev)
-  (add-hook 'completion-at-point-functions #'cape-file)
-  (add-hook 'completion-at-point-functions #'cape-elisp-block))
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-elisp-block)
+  (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster))
 
 (use-package marginalia
   :ensure t

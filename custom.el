@@ -10,7 +10,7 @@
  '(package-selected-packages
    '(cape corfu go-mode lua-mode magit marginalia markdown-mode move-text
           multiple-cursors rainbow-mode rust-mode yaml-mode))
- '(project-file-history-behavior 'relativize t)
+ '(project-file-history-behavior 'relativize)
  '(uxntal-uxnasm-path "uxn2 /home/ivan/opt/uxn2/etc/utils/drifblim.rom")
  '(uxntal-uxnemu-path "uxn2")
  '(whitespace-style
@@ -23,6 +23,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(ansi-color-blue ((t (:background "DeepSkyBlue3" :foreground "DeepSkyBlue3"))))
+ '(flymake-error ((t (:underline (:color foreground-color :style wave :position nil)))))
+ '(flymake-note ((t (:underline (:color foreground-color :style wave :position nil)))))
+ '(flymake-warning ((t (:underline (:color foreground-color :style wave :position nil)))))
  '(marginalia-file-priv-write ((t (:inherit font-lock-constant-face))))
  '(marginalia-key ((t (:inherit font-lock-constant-face))))
  '(marginalia-mode ((t (:inherit ##))))
