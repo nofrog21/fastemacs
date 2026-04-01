@@ -35,7 +35,8 @@
                                             :signatureHelpProvider
                                             :documentHighlightProvider
                                             :documentFormattingProvider
-                                            :inlayHintProvider)))
+                                            :inlayHintProvider
+                                            :codeActionProvider)))
 
 (use-package org
   :defer t
