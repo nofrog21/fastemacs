@@ -1,7 +1,8 @@
 ;; packages
 (require 'package)
+(package-activate-all)
 (add-to-list 'package-archives '("MELPA" . "http://melpa.org/packages/"))
-(setq package-install-upgrade-built-in t)
+(setq package-install-upgrade-built-in nil)
 (require 'use-package)
 
 (setq use-package-always-ensure t)
@@ -28,6 +29,7 @@
   (global-corfu-mode))
 
 (use-package eglot
+  :defer t
   :config
   (add-to-list 'eglot-server-programs '((c++-mode c-mode) . ("clangd")))
   (add-to-list 'eglot-server-programs '((rust-mode) . ("rust-analyzer")))
@@ -79,6 +81,19 @@
   (marginalia-mode 1))
 
 (use-package magit
-  :defer t)
+  :defer t
+  :config
+  (setq magit-commit-show-diff nil))
+
+(use-package tramp
+  :defer t
+  :init
+  (setq tramp-terminal-type "dumb")
+  (when (eq system-type 'windows-nt)
+    (setq tramp-default-method "plink"))
+  :config
+  (setq remote-file-name-inhibit-locks t
+	tramp-use-scp-direct-remote-copying t
+	remote-file-name-inhibit-auto-save-visited t))
 
 (load "goto-last-change.elc")

@@ -1,6 +1,5 @@
 (load custom-file)
 (load "packages.el")
-(load "custom-lisp.el")
 (setq ring-bell-function 'ignore)
 (setq url-proxy-services '(
 			               ("http"  .  "127.0.0.1:10808")
@@ -21,20 +20,12 @@
 (setq display-line-numbers-type 'visual)
 (setq display-line-numbers-current-absolute t)
 (global-display-line-numbers-mode 1)
-(setq-default tab-width 8)
-(setq-default indent-tabs-mode nil)
-(setq-default bidi-paragraph-direction 'left-to-right)
+(setq tab-width 8)
+(setq indent-tabs-mode nil)
+(setq bidi-paragraph-direction 'left-to-right)
 (setq enable-recursive-minibuffers t)
 (setq shell-command-with-editor-mode t)
 (setq align-to-tab-stop nil)
-
-;;; trump
-(setq tramp-terminal-type "dumb")
-(when (eq system-type 'windows-nt)
-  (setq tramp-default-method "plink"))
-(setq remote-file-name-inhibit-locks t
-      tramp-use-scp-direct-remote-copying t
-      remote-file-name-inhibit-auto-save-visited t)
 
 ;;; completions
 (icomplete-vertical-mode 1)
@@ -82,9 +73,6 @@
 				                 mode-line-process
 				                 mode-line-end-spaces))
 
-;;; magit
-(setq magit-commit-show-diff nil)
-
 ;;; project
 (setq project-file-history-behavior 'relativize)
 
@@ -93,7 +81,7 @@
 ;;; c-mode
 (add-hook 'c-mode-hook (lambda () (electric-indent-mode -1)))
 (add-hook 'c++-mode-hook (lambda () (electric-indent-mode -1)))
-(setq-default c-basic-offset tab-width)
+(setq c-basic-offset tab-width)
 (c-add-style "openbsd"
               '("bsd"
                 (c-backspace-function . delete-backward-char)
@@ -106,10 +94,9 @@
                  (arglist-cont-nonempty . *)
                  (statement-cont . *))
                 (indent-tabs-mode . t)))
-(setq-default c-default-style "openbsd")
+(setq c-default-style "openbsd")
 
 ;;; buffer names
-(require 'uniquify)
 (setq uniquify-buffer-name-style 'nil)
 
 (setq isearch-repeat-on-direction-change t)
@@ -125,5 +112,5 @@
 (global-set-key (kbd "M-p")  'move-text-up)
 (global-set-key (kbd "M-n")  'move-text-down)
 
-
 (put 'dired-find-alternate-file 'disabled nil)
+(load "custom-lisp.el")

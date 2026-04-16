@@ -31,7 +31,7 @@
 ;; startup overhead.
 (setq initial-major-mode 'fundamental-mode
       initial-scratch-message nil)
-;;(setq package-enable-at-startup nil)  ; Let the init.el file handle this
+(setq package-enable-at-startup nil)  ; Let the init.el file handle this
 (setq package-archives '(("melpa"        . "https://melpa.org/packages/")
                          ("gnu"          . "https://elpa.gnu.org/packages/")
                          ("nongnu"       . "https://elpa.nongnu.org/nongnu/")
@@ -40,6 +40,13 @@
                                    ("nongnu" . 80)
                                    ("melpa"  . 70)
                                    ("melpa-stable" . 50)))
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-(menu-bar-mode -1)
+
+(push '(menu-bar-lines . 0) default-frame-alist)
+(setq menu-bar-mode nil)
+(push '(tool-bar-lines . 0) default-frame-alist)
+(setq tool-bar-mode nil)
+(setq default-frame-scroll-bars 'right)
+(push '(vertical-scroll-bars) default-frame-alist)
+(push '(horizontal-scroll-bars) default-frame-alist)
+(setq scroll-bar-mode nil)
+
