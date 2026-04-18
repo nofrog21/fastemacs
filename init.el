@@ -1,35 +1,39 @@
+(load "custom-lisp.el")
 (load custom-file)
 (load "packages.el")
-(setq ring-bell-function 'ignore)
-(setq url-proxy-services '(
-			               ("http"  .  "127.0.0.1:10808")
-			               ("https" .  "127.0.0.1:10808"))
-      )
-(setq recenter-redisplay nil)
-
-;;; savehist-mode
-(savehist-mode 1)
-
-;;; whitespace-mode
-(add-hook 'prog-mode-hook (lambda () (whitespace-mode 1)))
-
 ;;; globals
-(setq inhibit-splash-screen t)
-(setq inhibit-startup-message t)
-(setq make-backup-files nil)
-(setq display-line-numbers-type 'visual)
-(setq display-line-numbers-current-absolute t)
-(global-display-line-numbers-mode 1)
-(setq tab-width 8)
-(setq indent-tabs-mode nil)
-(setq bidi-paragraph-direction 'left-to-right)
-(setq enable-recursive-minibuffers t)
-(setq shell-command-with-editor-mode t)
-(setq align-to-tab-stop nil)
+(use-package emacs
+  :custom
+  (tab-width 4)
+  (indent-tabs-mode nil)
+  (bidi-paragraph-direction 'left-to-right)
+  (enable-recursive-minibuffers t)
+  (align-to-tab-stop nil))
 
-;;; completions
-(icomplete-vertical-mode 1)
-(keymap-set icomplete-minibuffer-map "TAB" #'icomplete-force-complete)
+(use-package display-line-numbers
+  :custom
+  (display-line-numbers-type 'visual)
+  (display-line-numbers-current-absolute t)
+  :hook
+  (after-init . global-display-line-numbers-mode))
+
+;;; misc
+(setq dired-listing-switches "-Alh")
+(setq font-lock-maximum-deciration 2)
+(setq treesit-font-lock-level 2)
+(setq imenu-flatten 'annotation)
+(setq isearch-repeat-on-direction-change t)
+
+(use-package icomplete
+  :custom
+  (icomplete-show-matches-on-no-input t)
+  :bind
+  (:map icomplete-minibuffer-map
+        ("RET" . icomplete-fido-exit)
+        ("TAB" . icomplete-force-complete))
+  :hook
+  (after-init . icomplete-vertical-mode))
+
 (setq completion-category-overrides
       '((buffer
 	     (styles . (basic flex))
@@ -43,74 +47,74 @@
 (setq completion-show-help nil)
 (setq completion-auto-help nil)
 (setq completions-sort 'historical)
-(setq icomplete-show-matches-on-no-input t)
-(setq minibuffer-completion-auto-choose nil)
 (add-to-list 'completion-ignored-extensions "./")
 (add-to-list 'completion-ignored-extensions "../")
 
-;;; misc
-(setq dired-listing-switches "-Alh")
-(setq font-lock-maximum-deciration 2)
-(setq treesit-font-lock-level 2)
-(setq imenu-flatten 'annotation)
-
 ;;; compilation
-(add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
-(setq compilation-scroll-output 'first-error)
+(use-package compile
+  :custom
+  (compilation-scroll-output 'first-error)
+  :hook
+  (compilation-filter 'ansi-color-compilation-filter))
 
 ;;; modeline
 (setq-default mode-line-format '("%e" mode-line-front-space
-				                 (:propertize
-				                  ("" mode-line-mule-info mode-line-client
-				                   mode-line-modified
-				                   mode-line-remote mode-line-window-dedicated))
-				                 "  %b"
-				                 "  "
-				                 (project-mode-line project-mode-line-format)
-				                 (vc-mode vc-mode)
-				                 "	"
-				                 mode-name
-				                 mode-line-process
-				                 mode-line-end-spaces))
+				 (:propertize
+				  ("" mode-line-mule-info mode-line-client
+				   mode-line-modified
+				   mode-line-remote mode-line-window-dedicated))
+				 "  %b"
+				 "  "
+				 (project-mode-line project-mode-line-format)
+				 (vc-mode vc-mode)
+				 "	"
+				 mode-name
+				 mode-line-process
+				 mode-line-end-spaces))
 
-;;; project
-(setq project-file-history-behavior 'relativize)
+(use-package project
+  :custom
+  (project-file-history-behavior 'relativize))
 
-;;; rust-mode
+(use-package cc-mode
+  :custom
+  (c-basic-offset tab-width)
+  :hook
+  (c-mode . (lambda () (electric-indent-mode -1)))
+  (c++-mode . (lambda () (electric-indent-mode -1)))
+  :config
+  (c-add-style "openbsd"
+               '("bsd"
+                 (c-backspace-function . delete-backward-char)
+                 (c-syntactic-indentation-in-macros . nil)
+                 (c-tab-always-indent . t)
+                 (c-auto-align-backslashes . nil)
+                 (c-hanging-braces-alist
+                  (block-close . c-snug-do-while))
+                 (c-offsets-alist
+                  (arglist-cont-nonempty . *)
+                  (statement-cont . *))
+                 (indent-tabs-mode . t)))
+  (setq c-default-style "openbsd"))
 
-;;; c-mode
-(add-hook 'c-mode-hook (lambda () (electric-indent-mode -1)))
-(add-hook 'c++-mode-hook (lambda () (electric-indent-mode -1)))
-(setq c-basic-offset tab-width)
-(c-add-style "openbsd"
-              '("bsd"
-                (c-backspace-function . delete-backward-char)
-                (c-syntactic-indentation-in-macros . nil)
-                (c-tab-always-indent . t)
-                (c-auto-align-backslashes . nil)
-                (c-hanging-braces-alist
-                 (block-close . c-snug-do-while))
-                (c-offsets-alist
-                 (arglist-cont-nonempty . *)
-                 (statement-cont . *))
-                (indent-tabs-mode . t)))
-(setq c-default-style "openbsd")
+(use-package magit
+  :demand t
+  :custom
+  (magit-commit-show-diff nil)
+  (shell-command-with-editor-mode t))
 
 ;;; buffer names
-(setq uniquify-buffer-name-style 'nil)
-
-(setq isearch-repeat-on-direction-change t)
+(use-package uniquify
+  :ensure nil
+  :custom
+  (uniquify-buffer-name-style 'nil))
 
 ;;; keybindings
 (keymap-set minibuffer-local-filename-completion-map
 	        "C-l" #'up-directory)
 (global-set-key (kbd "C-x C-/") 'goto-last-change)
-(keymap-set icomplete-minibuffer-map "RET" 'icomplete-fido-exit)
 (global-set-key (kbd "<f5>") 'compile)
 (global-set-key (kbd "RET") 'newline-and-indent)
 (global-set-key (kbd "C-x C-b") 'switch-to-buffer)
 (global-set-key (kbd "M-p")  'move-text-up)
 (global-set-key (kbd "M-n")  'move-text-down)
-
-(put 'dired-find-alternate-file 'disabled nil)
-(load "custom-lisp.el")

@@ -6,10 +6,8 @@
  ;; If there is more than one, they won't work right.
  '(eaf-webengine-font-family "IosevkaFixed Nerd Font Extended")
  '(font-lock-maximum-decoration 2)
- '(package-selected-packages
-   '(cape corfu evil go-mode lua-mode magit marginalia markdown-mode
-	  move-text multiple-cursors rainbow-mode rust-mode yaml-mode))
- '(safe-local-variable-values '((c-default-style . "k&r")))
+ '(package-selected-packages nil)
+ '(safe-local-variable-values '((c-default-offset . 4) (c-default-style . "k&r")))
  '(uxntal-uxnasm-path "uxn2 /home/ivan/opt/uxn2/etc/utils/drifblim.rom")
  '(uxntal-uxnemu-path "uxn2")
  '(whitespace-style

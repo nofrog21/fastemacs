@@ -8,6 +8,7 @@
 (set-language-environment "UTF-8")
 (setq inhibit-splash-screen t)
 (setq inhibit-startup-message t)
+(setq make-backup-files nil)
 (setq native-comp-speed 2)
 ;; A second, case-insensitive pass over `auto-mode-alist' is time wasted.
 ;; No second pass of case-insensitive search over auto-mode-alist.
@@ -41,6 +42,10 @@
                                    ("melpa"  . 70)
                                    ("melpa-stable" . 50)))
 
+(setq ring-bell-function 'ignore)
+(setq url-proxy-services '(("http"  .  "127.0.0.1:10808")
+			   ("https" .  "127.0.0.1:10808")))
+(setq recenter-redisplay nil)
 (push '(menu-bar-lines . 0) default-frame-alist)
 (setq menu-bar-mode nil)
 (push '(tool-bar-lines . 0) default-frame-alist)

@@ -4,17 +4,13 @@
 (add-to-list 'package-archives '("MELPA" . "http://melpa.org/packages/"))
 (setq package-install-upgrade-built-in nil)
 (require 'use-package)
-
 (setq use-package-always-ensure t)
 
-;; markdown-mode
 (use-package markdown-mode
-  :defer t
   :mode ("README\\.md\\'" . gfm-mode)
-  :init (setq markdown-command "pandoc"))
+  :custom (markdown-command "pandoc"))
 
 (use-package multiple-cursors
-  :ensure t
   :bind
   (("C-S-c C-S-c" . 'mc/edit-lines)
    ("C->"         . 'mc/mark-next-like-this)
@@ -24,40 +20,37 @@
    ("C-:"         . 'mc/skip-to-previous-like-this)))
 
 (use-package corfu
-  :ensure t
-  :config
-  (global-corfu-mode))
+  :hook
+  (after-init . global-corfu-mode))
 
 (use-package eglot
-  :defer t
-  :config
-  (add-to-list 'eglot-server-programs '((c++-mode c-mode) . ("clangd")))
-  (add-to-list 'eglot-server-programs '((rust-mode) . ("rust-analyzer")))
-  (setq eglot-ignored-server-capabilities '(:documentOnTypeFormattingProvider
+  :custom
+  (eglot-ignored-server-capabilities '(:documentOnTypeFormattingProvider
                                             :signatureHelpProvider
                                             :documentHighlightProvider
                                             :documentFormattingProvider
                                             :inlayHintProvider
-                                            :codeActionProvider)))
+                                            :codeActionProvider))
+  :config
+  (add-to-list 'eglot-server-programs '((c++-mode c-mode) . ("clangd")))
+  (add-to-list 'eglot-server-programs '((rust-mode) . ("rust-analyzer"))))
 
 (use-package org
-  :defer t
-  :init
-  (setq org-startup-folded t)
-  (setq org-startup-truncated nil)
+  :mode ("\\.org\\'" . org-mode)
   :config
-  (global-set-key (kbd "C-c l") #'org-store-link)
-  (global-set-key (kbd "C-c a") #'org-agenda)
-  (global-set-key (kbd "C-c c") #'org-capture)
-  (global-set-key (kbd "C-c C") #'org-capture-goto-last-stored))
-
-
+  (org-startup-folded t)
+  (org-startup-truncated nil)
+  :bind
+  ("C-c l" . #'org-store-link)
+  ("C-c a" . #'org-agenda)
+  ("C-c c" . #'org-capture)
+  ("C-c C" . #'org-capture-goto-last-stored))
 
 (use-package dabbrev
   :bind (("C-M-/"   . #'cape-dabbrev)
          ("M-/" . dabbrev-expand))
-  :init
-  (setq dabbrev-case-fold-search nil)
+  :custom
+  (dabbrev-case-fold-search nil)
   :config
   (add-to-list 'dabbrev-ignored-buffer-regexps "\\` ")
   (add-to-list 'dabbrev-ignored-buffer-modes 'authinfo-mode)
@@ -66,34 +59,35 @@
   (add-to-list 'dabbrev-ignored-buffer-modes 'tags-table-mode))
 
 (use-package cape
-  :ensure t
   :bind (("C-c p" . cape-prefix-map)
          ("M-TAB" . completion-at-point))
-  :init
+  :config
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-file)
   (add-to-list 'completion-at-point-functions #'cape-elisp-block)
   (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster))
 
 (use-package marginalia
-  :ensure t
-  :config
-  (marginalia-mode 1))
-
-(use-package magit
-  :defer t
-  :config
-  (setq magit-commit-show-diff nil))
+  :hook
+  (after-init . marginalia-mode))
 
 (use-package tramp
   :defer t
-  :init
-  (setq tramp-terminal-type "dumb")
-  (when (eq system-type 'windows-nt)
-    (setq tramp-default-method "plink"))
+  :custom
+  (tramp-terminal-type "dumb")
+  (remote-file-name-inhibit-locks t)
+  (tramp-use-scp-direct-remote-copying t)
+  (remote-file-name-inhibit-auto-save-visited t)
   :config
-  (setq remote-file-name-inhibit-locks t
-	tramp-use-scp-direct-remote-copying t
-	remote-file-name-inhibit-auto-save-visited t))
+  (when (eq system-type 'windows-nt)
+    (setq tramp-default-method "plink")))
+
+(use-package savehist
+  :hook
+  (after-init . savehist-mode))
+
+(use-package whitespace
+  :hook
+  (prog-mode . (lambda () (whitespace-mode 1))))
 
 (load "goto-last-change.elc")
