@@ -90,4 +90,19 @@
   :hook
   (prog-mode . (lambda () (whitespace-mode 1))))
 
+(use-package evil
+  :custom
+  (evil-undo-system 'undo-redo)
+  :hook
+  (after-init . evil-mode)
+  :config
+  (define-prefix-command 'my-leader-map)
+  (keymap-set evil-motion-state-map "SPC" 'my-leader-map)
+  (keymap-set evil-normal-state-map "SPC" 'my-leader-map)
+  (define-key my-leader-map "fo" 'find-file)
+  (define-key my-leader-map "fs" 'save-buffer)
+  (define-key my-leader-map "bs" 'switch-to-buffer)
+  (define-key my-leader-map "p" project-prefix-map)
+ )
+
 (load "goto-last-change.elc")
