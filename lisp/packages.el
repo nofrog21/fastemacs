@@ -38,8 +38,8 @@
 (use-package org
   :mode ("\\.org\\'" . org-mode)
   :config
-  (org-startup-folded t)
-  (org-startup-truncated nil)
+  (setq org-startup-folded t)
+  (setq org-startup-truncated nil)
   :bind
   ("C-c l" . #'org-store-link)
   ("C-c a" . #'org-agenda)

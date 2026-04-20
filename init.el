@@ -4,11 +4,12 @@
 ;;; globals
 (use-package emacs
   :custom
-  (tab-width 4)
+  (tab-width 8)
   (indent-tabs-mode nil)
   (bidi-paragraph-direction 'left-to-right)
   (enable-recursive-minibuffers t)
-  (align-to-tab-stop nil))
+  (align-to-tab-stop nil)
+  (tab-always-indent 'complete))
 
 (use-package display-line-numbers
   :custom
@@ -55,7 +56,7 @@
   :custom
   (compilation-scroll-output 'first-error)
   :hook
-  (compilation-filter 'ansi-color-compilation-filter))
+  (compilation-filter . ansi-color-compilation-filter))
 
 ;;; modeline
 (setq-default mode-line-format '("%e" mode-line-front-space
