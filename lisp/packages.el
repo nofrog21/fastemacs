@@ -47,8 +47,8 @@
   ("C-c C" . #'org-capture-goto-last-stored))
 
 (use-package dabbrev
-  :bind (("C-M-/"   . #'cape-dabbrev)
-         ("M-/" . dabbrev-expand))
+  :bind (("M-/"   . completion-at-point)
+         ("C-M-/" . dabbrev-expand))
   :custom
   (dabbrev-case-fold-search nil)
   :config
@@ -59,8 +59,9 @@
   (add-to-list 'dabbrev-ignored-buffer-modes 'tags-table-mode))
 
 (use-package cape
+  :demand t
   :bind (("C-c p" . cape-prefix-map)
-         ("M-TAB" . completion-at-point))
+         )
   :config
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-file)
@@ -96,12 +97,17 @@
   :hook
   (after-init . evil-mode)
   :config
+  (define-key dired-mode-map (kbd "SPC") nil)
+  (define-key help-mode-map (kbd "SPC") nil)
   (define-prefix-command 'my-leader-map)
   (keymap-set evil-motion-state-map "SPC" 'my-leader-map)
   (keymap-set evil-normal-state-map "SPC" 'my-leader-map)
+  (keymap-set evil-insert-state-map "C-n" nil)
+  (keymap-set evil-insert-state-map "C-p" nil)
   (define-key my-leader-map "fo" 'find-file)
   (define-key my-leader-map "fs" 'save-buffer)
   (define-key my-leader-map "bs" 'switch-to-buffer)
+  (define-key my-leader-map "bk" 'kill-buffer)
   (define-key my-leader-map "p" project-prefix-map)
  )
 
