@@ -106,6 +106,7 @@
   (keymap-set evil-insert-state-map "C-p" nil)
   (define-key my-leader-map "fo" 'find-file)
   (define-key my-leader-map "fs" 'save-buffer)
+  (define-key my-leader-map "fw" 'write-file)
   (define-key my-leader-map "bs" 'switch-to-buffer)
   (define-key my-leader-map "bk" 'kill-buffer)
   (define-key my-leader-map "p" project-prefix-map)
