@@ -32,7 +32,10 @@
                                             :inlayHintProvider
                                             :codeActionProvider))
   :config
-  (add-to-list 'eglot-server-programs '((c++-mode c-mode) . ("clangd")))
+  (add-to-list 'eglot-server-programs '((c++-mode c-mode c-ts-mode c++-ts-mode) .
+                                        ("clangd"
+                                         "--header-insertion=never"
+                                         "--header-insertion-decorators=0")))
   (add-to-list 'eglot-server-programs '((rust-mode) . ("rust-analyzer"))))
 
 (use-package org

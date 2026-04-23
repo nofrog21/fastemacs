@@ -9,7 +9,7 @@
   (bidi-paragraph-direction 'left-to-right)
   (enable-recursive-minibuffers t)
   (align-to-tab-stop nil)
-  (tab-always-indent 'complete))
+  (tab-always-indent t))
 
 (use-package display-line-numbers
   :custom
