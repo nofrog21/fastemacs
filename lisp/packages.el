@@ -95,13 +95,13 @@
   (prog-mode . (lambda () (whitespace-mode 1))))
 
 (use-package evil
+  :init
+  (setq evil-want-keybinding nil)
   :custom
   (evil-undo-system 'undo-redo)
   :hook
   (after-init . evil-mode)
   :config
-  (define-key dired-mode-map (kbd "SPC") nil)
-  (define-key help-mode-map (kbd "SPC") nil)
   (define-prefix-command 'my-leader-map)
   (keymap-set evil-motion-state-map "SPC" 'my-leader-map)
   (keymap-set evil-normal-state-map "SPC" 'my-leader-map)
@@ -114,5 +114,25 @@
   (define-key my-leader-map "bk" 'kill-buffer)
   (define-key my-leader-map "p" project-prefix-map)
  )
+
+(use-package evil-collection
+  :init
+  (setq evil-want-keybinding nil)
+  :config
+  (evil-collection-init '(dired magit help)))
+
+(use-package dired
+  :ensure nil
+  :bind
+  (:map dired-mode-map
+        ("SPC" . nil)
+        ("<normal-state> SPC" . nil)))
+
+(use-package help
+  :ensure nil
+  :bind
+  (:map help-mode-map
+        ("SPC" . nil)
+        ("<normal-state> SPC" . nil)))
 
 (load "goto-last-change.elc")
