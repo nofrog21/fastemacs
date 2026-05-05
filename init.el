@@ -56,7 +56,9 @@
   :custom
   (compilation-scroll-output 'first-error)
   :hook
-  (compilation-filter . ansi-color-compilation-filter))
+  (compilation-filter . ansi-color-compilation-filter)
+  (compilation-mode . (lambda () (setq truncate-lines nil
+                                       truncate-partial-width-windows nil))))
 
 ;;; modeline
 (setq-default mode-line-format '("%e" mode-line-front-space
