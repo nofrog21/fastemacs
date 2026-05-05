@@ -68,8 +68,7 @@
   :config
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-file)
-  (add-to-list 'completion-at-point-functions #'cape-elisp-block)
-  (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster))
+  (add-to-list 'completion-at-point-functions #'cape-elisp-block))
 
 (use-package marginalia
   :hook
