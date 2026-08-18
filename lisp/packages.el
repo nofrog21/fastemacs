@@ -118,9 +118,9 @@
   (define-key my-leader-map "bk" 'kill-buffer)
   (define-key my-leader-map "br" 'rename-buffer)
   (define-key my-leader-map "bq" 'quit-window)
-  (define-key my-leader-map "ts-" 'text-scale-adjust)
-  (define-key my-leader-map "ts=" 'text-scale-adjust)
   (define-key my-leader-map "ts0" 'text-scale-adjust)
+  (define-key my-leader-map "ts=" 'text-scale-adjust)
+  (define-key my-leader-map "ts-" 'text-scale-adjust)
   (define-key my-leader-map "p" project-prefix-map)
  )
 
