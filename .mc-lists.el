@@ -18,8 +18,10 @@
         evil-end-of-line
         evil-forward-char
         evil-insert
+        evil-next-visual-line
         evil-normal-state
         evil-previous-line
+        evil-previous-visual-line
         mark-sexp
         tab-to-tab-stop
         untabify

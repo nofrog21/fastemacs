@@ -36,7 +36,11 @@
                                         ("clangd"
                                          "--header-insertion=never"
                                          "--header-insertion-decorators=0")))
-  (add-to-list 'eglot-server-programs '((rust-mode) . ("rust-analyzer"))))
+  (add-to-list 'eglot-server-programs '((rust-mode) . ("rust-analyzer")))
+  (add-to-list 'eglot-server-programs '((zig-mode) . ("zls"))))
+
+(use-package zig-mode
+  :demand t)
 
 (use-package org
   :mode ("\\.org\\'" . org-mode)
@@ -96,6 +100,7 @@
 (use-package evil
   :init
   (setq evil-want-keybinding nil)
+  (setq evil-respect-visual-line-mode t)
   :custom
   (evil-undo-system 'undo-redo)
   :hook
@@ -113,9 +118,9 @@
   (define-key my-leader-map "bk" 'kill-buffer)
   (define-key my-leader-map "br" 'rename-buffer)
   (define-key my-leader-map "bq" 'quit-window)
-  (define-key my-leader-map "ts+" 'text-scale-increase)
-  (define-key my-leader-map "ts-" 'text-scale-decrease)
-  (define-key my-leader-map "ts0" 'text-scale-set)
+  (define-key my-leader-map "ts-" 'text-scale-adjust)
+  (define-key my-leader-map "ts=" 'text-scale-adjust)
+  (define-key my-leader-map "ts0" 'text-scale-adjust)
   (define-key my-leader-map "p" project-prefix-map)
  )
 

@@ -9,7 +9,9 @@
   (bidi-paragraph-direction 'left-to-right)
   (enable-recursive-minibuffers t)
   (align-to-tab-stop nil)
-  (tab-always-indent t))
+  (tab-always-indent t)
+  :config
+  (global-visual-line-mode t))
 
 (use-package display-line-numbers
   :custom
@@ -51,14 +53,36 @@
 (add-to-list 'completion-ignored-extensions "./")
 (add-to-list 'completion-ignored-extensions "../")
 
+;;; grep
+(use-package grep
+  :custom
+  (grep-command "grep --color=always -nHI -r ")
+  (grep-use-null-device nil))
+
 ;;; compilation
+(defun display-buffer-compilation-mode-p (buffer-name action)
+  "Determine whether BUFFER-NAME is a compilation buffer."
+  (with-current-buffer buffer-name
+    (or
+     (eq 'compilation-mode (buffer-local-value 'major-mode (current-buffer)))
+     (string-match (rx "*[Cc]ompilation*")
+                   buffer-name))))
+
 (use-package compile
   :custom
   (compilation-scroll-output 'first-error)
+  (compile-command nil)
+  (compilation-disable-input t)
   :hook
   (compilation-filter . ansi-color-compilation-filter)
-  (compilation-mode . (lambda () (setq truncate-lines nil
-                                       truncate-partial-width-windows nil))))
+  :config
+  (add-to-list 'display-buffer-alist '(display-buffer-compilation-mode-p
+                                       (display-buffer-at-bottom
+                                        display-buffer-in-side-window)
+                                       (window-height . 0.25)
+                                       (side . bottom)
+                                       (slot . -6)))
+  (add-to-list 'compilation-environment "TERM=dumb-emacs-ansi"))
 
 ;;; modeline
 (setq-default mode-line-format '("%e" mode-line-front-space
@@ -73,7 +97,7 @@
 				 "	"
 				 mode-name
 				 mode-line-process
-				 mode-line-end-spaces))
+				 ))
 
 (use-package project
   :custom
