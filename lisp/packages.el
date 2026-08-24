@@ -128,7 +128,7 @@
   :init
   (setq evil-want-keybinding nil)
   :config
-  (evil-collection-init '(dired magit help)))
+  (evil-collection-init '(dired magit help compile)))
 
 (use-package dired
   :ensure nil

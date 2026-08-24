@@ -22,6 +22,7 @@
 
 ;;; misc
 (setq dired-listing-switches "-Alh")
+(setq dired-dwim-target 1)
 (setq font-lock-maximum-deciration 2)
 (setq treesit-font-lock-level 2)
 (setq imenu-flatten 'annotation)
@@ -75,7 +76,6 @@
   (compilation-disable-input t)
   :hook
   (compilation-filter . ansi-color-compilation-filter)
-  (compilation-mode . (lambda () (text-scale-decrease 1)))
   :config
   (add-to-list 'display-buffer-alist '(display-buffer-compilation-mode-p
                                        (display-buffer-at-bottom
