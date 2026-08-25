@@ -10,6 +10,22 @@
   :mode ("README\\.md\\'" . gfm-mode)
   :custom (markdown-command "pandoc"))
 
+(use-package fzf
+  :bind
+    ;; Don't forget to set keybinds!
+  :config
+  (setq fzf/args "-x --color base16 --print-query --margin=1,0 --no-hscroll --ansi"
+        fzf/executable "fzf"
+        fzf/git-grep-args "-i --line-number %s"
+        ;; command used for `fzf-grep-*` functions
+        ;; example usage for ripgrep:
+        fzf/grep-command "rg --no-heading -nH --color=always"
+        ;; fzf/grep-command "grep -nrH"
+        ;; If nil, the fzf buffer will appear at the top of the window
+        fzf/maximize t
+        fzf/position-bottom nil
+        fzf/window-height 15))
+
 (use-package multiple-cursors
   :bind
   (("C-S-c C-S-c" . 'mc/edit-lines)
@@ -143,5 +159,3 @@
   (:map help-mode-map
         ("SPC" . nil)
         ("<normal-state> SPC" . nil)))
-
-(load "goto-last-change.elc")

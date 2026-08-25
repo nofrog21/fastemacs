@@ -7,7 +7,7 @@
  '(eaf-webengine-font-family "IosevkaFixed Nerd Font Extended")
  '(font-lock-maximum-decoration 2)
  '(package-selected-packages
-   '(cape corfu evil-collection kconfig-mode magit marginalia
+   '(cape corfu evil-collection fzf kconfig-mode magit marginalia
           markdown-mode move-text multiple-cursors rainbow-mode
           rust-mode zig-mode))
  '(safe-local-variable-values '((c-default-offset . 4) (c-default-style . "k&r")))

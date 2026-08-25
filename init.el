@@ -140,7 +140,6 @@
 ;;; keybindings
 (keymap-set minibuffer-local-filename-completion-map
 	        "C-l" #'up-directory)
-(global-set-key (kbd "C-x C-/") 'goto-last-change)
 (global-set-key (kbd "<f5>") 'compile)
 (global-set-key (kbd "RET") 'newline-and-indent)
 (global-set-key (kbd "C-x C-b") 'switch-to-buffer)
