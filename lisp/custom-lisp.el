@@ -19,3 +19,11 @@
    (list (region-beginning) (region-end) (read-file-name "Find file: " nil default-directory)))
   (write-region (concat "# " (buffer-substring start end) "\n\n## Описание\n\n## Детали\n\n__Статус: Не проверялся__") nil filename)
   )
+
+(defun display-buffer-compilation-mode-p (buffer-name action)
+  "Determine whether BUFFER-NAME is a compilation buffer."
+  (with-current-buffer buffer-name
+    (or
+     (eq 'compilation-mode (buffer-local-value 'major-mode (current-buffer)))
+     (string-match (rx "*[Cc]ompilation*")
+                   buffer-name))))

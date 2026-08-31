@@ -11,7 +11,8 @@
   (align-to-tab-stop nil)
   (tab-always-indent t)
   :config
-  (global-visual-line-mode t))
+  (global-visual-line-mode t)
+  )
 
 (use-package display-line-numbers
   :custom
@@ -62,14 +63,6 @@
   (grep-use-null-device nil))
 
 ;;; compilation
-(defun display-buffer-compilation-mode-p (buffer-name action)
-  "Determine whether BUFFER-NAME is a compilation buffer."
-  (with-current-buffer buffer-name
-    (or
-     (eq 'compilation-mode (buffer-local-value 'major-mode (current-buffer)))
-     (string-match (rx "*[Cc]ompilation*")
-                   buffer-name))))
-
 (use-package compile
   :custom
   (compilation-scroll-output 'first-error)
