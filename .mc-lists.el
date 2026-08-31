@@ -14,8 +14,10 @@
         dired-next-line
         dired-previous-line
         evil-append
+        evil-backward-char
         evil-delete-char
         evil-end-of-line
+        evil-force-normal-state
         evil-forward-char
         evil-insert
         evil-next-visual-line

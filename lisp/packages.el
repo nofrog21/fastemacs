@@ -14,13 +14,13 @@
   :bind
     ;; Don't forget to set keybinds!
   :config
-  (setq fzf/args "-x --color base16 --print-query --margin=1,0 --no-hscroll --ansi"
+  (setq fzf/args "-x --color=base16 --print-query --margin=1,0 --no-hscroll --ansi"
         fzf/executable "fzf"
         fzf/git-grep-args "-i --line-number %s"
-        ;; command used for `fzf-grep-*` functions
+        ; command used for `fzf-grep-*` functions
         ;; example usage for ripgrep:
-        fzf/grep-command "rg --no-heading -nH --color=always"
-        ;; fzf/grep-command "grep -nrH"
+        ;; fzf/grep-command "rg --no-heading -nH --color=always"
+        fzf/grep-command "grep -nrH --color=always"
         ;; If nil, the fzf buffer will appear at the top of the window
         fzf/maximize t
         fzf/position-bottom nil
@@ -63,6 +63,20 @@
   :config
   (setq org-startup-folded t)
   (setq org-startup-truncated nil)
+  (setq org-agenda-files '("~/Documents/org/inbox.org"
+                           "~/Documents/org/gtd.org"
+                           "~/Documents/org/tickler.org"))
+  (setq org-capture-templates '(("t" "Todo [inbox]" entry
+                                 (file+headline "~/Documents/org/inbox.org" "Tasks")
+                                 "* TODO %i%?")
+                                ("T" "Tickler" entry
+                                 (file+headline "~/Documents/org/tickler.org" "Tickler")
+                                 "* %i%? \n %U")))
+  (setq org-refile-targets '(("~/Documents/org/gtd.org" :maxlevel . 3)
+                           ("~/Documents/org/someday.org" :level . 1)
+                           ("~/Documents/org/tickler.org" :maxlevel . 2)))
+  (setq org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
+  (setq org-agenda-start-with-follow-mode t)
   :bind
   ("C-c l" . #'org-store-link)
   ("C-c a" . #'org-agenda)
@@ -144,7 +158,7 @@
   :init
   (setq evil-want-keybinding nil)
   :config
-  (evil-collection-init '(dired magit help compile)))
+  (evil-collection-init '(org-agenda org dired magit help compile)))
 
 (use-package dired
   :ensure nil

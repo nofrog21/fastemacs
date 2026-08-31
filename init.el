@@ -57,7 +57,8 @@
 ;;; grep
 (use-package grep
   :custom
-  (grep-command "grep --color=always -nHI -r ")
+  ;; (grep-command "grep --color=always -nH -r ")
+  (grep-command "rg --no-heading --color=always -nH ")
   (grep-use-null-device nil))
 
 ;;; compilation
