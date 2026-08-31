@@ -8,8 +8,8 @@
  '(font-lock-maximum-decoration 2)
  '(mc/always-run-for-all t)
  '(package-selected-packages
-   '(cape corfu evil-collection fzf goto-last-change kconfig-mode magit
-          marginalia markdown-mode move-text multiple-cursors
+   '(cape corfu evil evil-collection fzf goto-last-change kconfig-mode
+          magit marginalia markdown-mode move-text multiple-cursors
           rainbow-mode rust-mode zig-mode))
  '(safe-local-variable-values '((c-default-offset . 4) (c-default-style . "k&r")))
  '(uxntal-uxnasm-path "uxn2 /home/ivan/opt/uxn2/etc/utils/drifblim.rom")

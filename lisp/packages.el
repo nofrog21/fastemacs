@@ -60,23 +60,24 @@
 
 (use-package org
   :mode ("\\.org\\'" . org-mode)
-  :config
-  (setq org-startup-folded t)
-  (setq org-startup-truncated nil)
-  (setq org-agenda-files '("~/Documents/org/inbox.org"
-                           "~/Documents/org/gtd.org"
-                           "~/Documents/org/tickler.org"))
-  (setq org-capture-templates '(("t" "Todo [inbox]" entry
-                                 (file+headline "~/Documents/org/inbox.org" "Tasks")
-                                 "* TODO %i%?")
-                                ("T" "Tickler" entry
-                                 (file+headline "~/Documents/org/tickler.org" "Tickler")
-                                 "* %i%? \n %U")))
-  (setq org-refile-targets '(("~/Documents/org/gtd.org" :maxlevel . 3)
-                           ("~/Documents/org/someday.org" :level . 1)
-                           ("~/Documents/org/tickler.org" :maxlevel . 2)))
-  (setq org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
-  (setq org-agenda-start-with-follow-mode t)
+  :custom
+  (org-startup-folded t)
+  (org-agenda-todo-list-sublevels nil)
+  (org-agenda-files '("~/Documents/gtd/inbox.org"
+                      "~/Documents/gtd/gtd.org"
+                      "~/Documents/gtd/tickler.org"))
+  (org-capture-templates '(("t" "Todo [inbox]" entry
+                            (file+headline "~/Documents/gtd/inbox.org" "Tasks")
+                            "* TODO %i%?")
+                           ("T" "Tickler" entry
+                            (file+headline "~/Documents/gtd/tickler.org" "Tickler")
+                            "* %i%? \n %U")))
+  (org-refile-targets '(("~/Documents/gtd/gtd.org" :maxlevel . 3)
+                        ("~/Documents/gtd/someday.org" :level . 1)
+                        ("~/Documents/gtd/tickler.org" :maxlevel . 2)))
+  (org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
+  (org-agenda-follow-indirect t)
+  (org-agenda-start-with-follow-mode t)
   :bind
   ("C-c l" . #'org-store-link)
   ("C-c a" . #'org-agenda)
@@ -155,8 +156,6 @@
  )
 
 (use-package evil-collection
-  :init
-  (setq evil-want-keybinding nil)
   :config
   (evil-collection-init '(org-agenda org dired magit help compile)))
 
