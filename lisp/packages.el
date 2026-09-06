@@ -42,11 +42,11 @@
 (use-package eglot
   :custom
   (eglot-ignored-server-capabilities '(:documentOnTypeFormattingProvider
-                                            :signatureHelpProvider
-                                            :documentHighlightProvider
-                                            :documentFormattingProvider
-                                            :inlayHintProvider
-                                            :codeActionProvider))
+                                       :signatureHelpProvider
+                                       :documentHighlightProvider
+                                       :documentFormattingProvider
+                                       :inlayHintProvider
+                                       :codeActionProvider))
   :config
   (add-to-list 'eglot-server-programs '((c++-mode c-mode c-ts-mode c++-ts-mode) .
                                         ("clangd"
@@ -79,10 +79,20 @@
   (org-agenda-follow-indirect t)
   (org-agenda-start-with-follow-mode t)
   :bind
-  ("C-c l" . #'org-store-link)
-  ("C-c a" . #'org-agenda)
-  ("C-c c" . #'org-capture)
-  ("C-c C" . #'org-capture-goto-last-stored))
+  (:map org-mode-map
+        ("SPC" . nil)
+        ("<normal-state> SPC" . nil)
+        ("<normal-state> SPC c $" . 'org-archive-subtree)
+        ("<normal-state> SPC c #" . 'org-update-statistics-cookies)
+        ("<normal-state> SPC c ," . 'org-priority)
+        ("<normal-state> SPC c l" . 'org-insert-link)
+        ("<normal-state> SPC c t" . 'org-todo)
+        ("<normal-state> SPC c w" . 'org-refile)
+        ("<normal-state> SPC c ." . 'org-timestamp)
+        ("<normal-state> SPC c d" . 'org-deadline)
+        ("<normal-state> SPC c s" . 'org-schedule)
+        )
+)
 
 (use-package dabbrev
   :bind (("M-/"   . completion-at-point)
@@ -98,8 +108,6 @@
 
 (use-package cape
   :demand t
-  :bind (("C-c p" . cape-prefix-map)
-         )
   :config
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-file)
@@ -129,6 +137,7 @@
   (prog-mode . (lambda () (whitespace-mode 1))))
 
 (use-package evil
+  :bind
   :init
   (setq evil-want-keybinding nil)
   (setq evil-respect-visual-line-mode t)
@@ -153,6 +162,10 @@
   (define-key my-leader-map "ts=" 'text-scale-adjust)
   (define-key my-leader-map "ts-" 'text-scale-adjust)
   (define-key my-leader-map "p" project-prefix-map)
+  (define-key my-leader-map "oa" 'org-agenda)
+  (define-key my-leader-map "oc" 'org-capture)
+  (define-key my-leader-map "m" 'magit)
+  (define-key my-leader-map "cp" cape-prefix-map)
  )
 
 (use-package evil-collection
