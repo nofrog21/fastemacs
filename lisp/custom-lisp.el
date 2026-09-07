@@ -27,3 +27,11 @@
      (eq 'compilation-mode (buffer-local-value 'major-mode (current-buffer)))
      (string-match (rx "*[Cc]ompilation*")
                    buffer-name))))
+
+(defun cd-compile ()
+  "Change default-directory and run compile-command"
+  (interactive)
+  (with-temp-buffer
+    (call-interactively 'cd)
+    (call-interactively 'compile))
+  )
