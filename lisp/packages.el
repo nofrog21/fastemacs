@@ -157,7 +157,7 @@
 
 (use-package evil-collection
   :config
-  (evil-collection-init '(org-agenda org dired magit help compile)))
+  (evil-collection-init '(org-agenda org dired magit help compile xref)))
 
 (use-package dired
   :ensure nil
