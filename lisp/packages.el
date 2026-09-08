@@ -38,7 +38,7 @@
 
 (use-package evil-collection
   :config
-  (evil-collection-init '(org-agenda org dired magit help compile)))
+  (evil-collection-init '(org-agenda org dired magit help compile xref)))
 
 (use-package markdown-mode
   :mode ("README\\.md\\'" . gfm-mode)
@@ -78,7 +78,6 @@
   (eglot-ignored-server-capabilities '(:documentOnTypeFormattingProvider
                                        :signatureHelpProvider
                                        :documentHighlightProvider
-                                       :documentFormattingProvider
                                        :inlayHintProvider
                                        :codeActionProvider))
   :config
