@@ -78,21 +78,18 @@
   (org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
   (org-agenda-follow-indirect t)
   (org-agenda-start-with-follow-mode t)
-  :bind
-  (:map org-mode-map
-        ("SPC" . nil)
-        ("<normal-state> SPC" . nil)
-        ("<normal-state> SPC c $" . 'org-archive-subtree)
-        ("<normal-state> SPC c #" . 'org-update-statistics-cookies)
-        ("<normal-state> SPC c ," . 'org-priority)
-        ("<normal-state> SPC c l" . 'org-insert-link)
-        ("<normal-state> SPC c t" . 'org-todo)
-        ("<normal-state> SPC c w" . 'org-refile)
-        ("<normal-state> SPC c ." . 'org-timestamp)
-        ("<normal-state> SPC c d" . 'org-deadline)
-        ("<normal-state> SPC c s" . 'org-schedule)
-        )
-)
+  :config
+  (evil-define-key 'normal org-mode-map (kbd "SPC c $") 'org-archive-subtree)
+  (evil-define-key 'normal org-mode-map (kbd "SPC c $") 'org-archive-subtree)
+  (evil-define-key 'normal org-mode-map (kbd "SPC c #") 'org-update-statistics-cookies)
+  (evil-define-key 'normal org-mode-map (kbd "SPC c ,") 'org-priority)
+  (evil-define-key 'normal org-mode-map (kbd "SPC c l") 'org-insert-link)
+  (evil-define-key 'normal org-mode-map (kbd "SPC c t") 'org-todo)
+  (evil-define-key 'normal org-mode-map (kbd "SPC c w") 'org-refile)
+  (evil-define-key 'normal org-mode-map (kbd "SPC c .") 'org-timestamp)
+  (evil-define-key 'normal org-mode-map (kbd "SPC c d") 'org-deadline)
+  (evil-define-key 'normal org-mode-map (kbd "SPC c s") 'org-schedule)
+  )
 
 (use-package dabbrev
   :bind (("M-/"   . completion-at-point)
@@ -137,6 +134,7 @@
   (prog-mode . (lambda () (whitespace-mode 1))))
 
 (use-package evil
+  :demand t
   :bind
   :init
   (setq evil-want-keybinding nil)
