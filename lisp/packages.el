@@ -6,6 +6,40 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
+(use-package evil
+  :demand t
+  :bind
+  :init
+  (setq evil-want-keybinding nil)
+  (setq evil-respect-visual-line-mode t)
+  :custom
+  (evil-undo-system 'undo-redo)
+  :hook
+  (after-init . evil-mode)
+  :config
+  (define-prefix-command 'my-leader-map)
+  (keymap-set evil-motion-state-map "SPC" 'my-leader-map)
+  (keymap-set evil-normal-state-map "SPC" 'my-leader-map)
+  (keymap-set evil-insert-state-map "C-n" nil)
+  (keymap-set evil-insert-state-map "C-p" nil)
+  (define-key my-leader-map "fo" 'find-file)
+  (define-key my-leader-map "fs" 'save-buffer)
+  (define-key my-leader-map "fw" 'write-file)
+  (define-key my-leader-map "bs" 'switch-to-buffer)
+  (define-key my-leader-map "bk" 'kill-buffer)
+  (define-key my-leader-map "br" 'rename-buffer)
+  (define-key my-leader-map "bq" 'quit-window)
+  (define-key my-leader-map "ts0" 'text-scale-adjust)
+  (define-key my-leader-map "ts=" 'text-scale-adjust)
+  (define-key my-leader-map "ts-" 'text-scale-adjust)
+  (define-key my-leader-map "p" project-prefix-map)
+  (define-key my-leader-map "m" 'magit)
+ )
+
+(use-package evil-collection
+  :config
+  (evil-collection-init '(org-agenda org dired magit help compile)))
+
 (use-package markdown-mode
   :mode ("README\\.md\\'" . gfm-mode)
   :custom (markdown-command "pandoc"))
@@ -59,6 +93,7 @@
   :demand t)
 
 (use-package org
+  :demand t
   :mode ("\\.org\\'" . org-mode)
   :custom
   (org-startup-folded t)
@@ -71,7 +106,10 @@
                             "* TODO %i%?")
                            ("T" "Tickler" entry
                             (file+headline "~/Documents/gtd/tickler.org" "Tickler")
-                            "* %i%?\n %U")))
+                            "* %i%?\n  %U")
+                           ("n" "Note" entry
+                            (file+headline "~/Documents/gtd/notes.org" "Notes")
+                            "* %i%?\n  %U" :jump-to-captured t)))
   (org-refile-targets '(("~/Documents/gtd/gtd.org" :maxlevel . 3)
                         ("~/Documents/gtd/someday.org" :level . 1)
                         ("~/Documents/gtd/tickler.org" :maxlevel . 2)))
@@ -79,6 +117,9 @@
   (org-agenda-follow-indirect t)
   (org-agenda-start-with-follow-mode t)
   :config
+  (define-key my-leader-map "oa" 'org-agenda)
+  (define-key my-leader-map "oc" 'org-capture)
+  (define-key my-leader-map "os" 'org-store-link)
   (evil-define-key 'normal org-mode-map (kbd "SPC c $") 'org-archive-subtree)
   (evil-define-key 'normal org-mode-map (kbd "SPC c $") 'org-archive-subtree)
   (evil-define-key 'normal org-mode-map (kbd "SPC c #") 'org-update-statistics-cookies)
@@ -89,6 +130,8 @@
   (evil-define-key 'normal org-mode-map (kbd "SPC c .") 'org-timestamp)
   (evil-define-key 'normal org-mode-map (kbd "SPC c d") 'org-deadline)
   (evil-define-key 'normal org-mode-map (kbd "SPC c s") 'org-schedule)
+  (evil-define-key 'normal org-mode-map (kbd "SPC c &") 'org-mark-ring-goto)
+  (evil-define-key 'normal org-mode-map (kbd "SPC c o") 'org-open-at-point)
   )
 
 (use-package dabbrev
@@ -106,6 +149,7 @@
 (use-package cape
   :demand t
   :config
+  (define-key my-leader-map "cp" cape-prefix-map)
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-file)
   (add-to-list 'completion-at-point-functions #'cape-elisp-block))
@@ -132,43 +176,6 @@
 (use-package whitespace
   :hook
   (prog-mode . (lambda () (whitespace-mode 1))))
-
-(use-package evil
-  :demand t
-  :bind
-  :init
-  (setq evil-want-keybinding nil)
-  (setq evil-respect-visual-line-mode t)
-  :custom
-  (evil-undo-system 'undo-redo)
-  :hook
-  (after-init . evil-mode)
-  :config
-  (define-prefix-command 'my-leader-map)
-  (keymap-set evil-motion-state-map "SPC" 'my-leader-map)
-  (keymap-set evil-normal-state-map "SPC" 'my-leader-map)
-  (keymap-set evil-insert-state-map "C-n" nil)
-  (keymap-set evil-insert-state-map "C-p" nil)
-  (define-key my-leader-map "fo" 'find-file)
-  (define-key my-leader-map "fs" 'save-buffer)
-  (define-key my-leader-map "fw" 'write-file)
-  (define-key my-leader-map "bs" 'switch-to-buffer)
-  (define-key my-leader-map "bk" 'kill-buffer)
-  (define-key my-leader-map "br" 'rename-buffer)
-  (define-key my-leader-map "bq" 'quit-window)
-  (define-key my-leader-map "ts0" 'text-scale-adjust)
-  (define-key my-leader-map "ts=" 'text-scale-adjust)
-  (define-key my-leader-map "ts-" 'text-scale-adjust)
-  (define-key my-leader-map "p" project-prefix-map)
-  (define-key my-leader-map "oa" 'org-agenda)
-  (define-key my-leader-map "oc" 'org-capture)
-  (define-key my-leader-map "m" 'magit)
-  (define-key my-leader-map "cp" cape-prefix-map)
- )
-
-(use-package evil-collection
-  :config
-  (evil-collection-init '(org-agenda org dired magit help compile xref)))
 
 (use-package dired
   :ensure nil
