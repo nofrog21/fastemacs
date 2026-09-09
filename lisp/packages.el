@@ -154,6 +154,9 @@
   (add-to-list 'completion-at-point-functions #'cape-elisp-block))
 
 (use-package marginalia
+  :bind
+  (:map minibuffer-local-map
+        ("M-A" . marginalia-cycle))
   :hook
   (after-init . marginalia-mode))
 

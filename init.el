@@ -37,6 +37,7 @@
         ("RET" . icomplete-fido-exit)
         ("TAB" . icomplete-force-complete))
   :hook
+  (icomplete-minibuffer-setup . (lambda () (setq truncate-lines t)))
   (after-init . icomplete-vertical-mode))
 
 (setq completion-category-overrides
