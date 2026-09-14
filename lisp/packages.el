@@ -1,4 +1,4 @@
-;; packages
+;; packages  -*- lexical-binding: t; -*-
 (require 'package)
 (package-activate-all)
 (add-to-list 'package-archives '("MELPA" . "http://melpa.org/packages/"))

@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (defun up-directory (arg)
   "Move up a directory (delete backwards to /)."
   (interactive "p")

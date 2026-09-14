@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (load "custom-lisp.el")
 (load custom-file)
 (load "packages.el")

@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (add-to-list 'load-path "~/.emacs.d/lisp")
 (setq-default custom-file "~/fastemacs/custom.el")
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
