@@ -1,6 +1,5 @@
+;; packages  -*- lexical-binding: t; -*-
 (load "custom-lisp.el")
-
-;; packages
 (require 'package)
 (package-activate-all)
 (add-to-list 'package-archives '("MELPA" . "http://melpa.org/packages/"))

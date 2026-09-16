@@ -11,9 +11,14 @@
    '(cape corfu evil evil-collection fzf goto-last-change kconfig-mode
           magit marginalia markdown-mode move-text multiple-cursors
           rainbow-mode rust-mode zig-mode))
- '(safe-local-variable-values '((c-default-offset . 4) (c-default-style . "k&r")))
+ '(safe-local-variable-values
+   '((eval when (fboundp 'rainbow-mode) (rainbow-mode 1))
+     (c-default-offset . 4) (c-default-style . "k&r")))
  '(uxntal-uxnasm-path "uxn2 /home/ivan/opt/uxn2/etc/utils/drifblim.rom")
  '(uxntal-uxnemu-path "uxn2")
+ '(warning-suppress-types
+   '((files missing-lexbind-cookie
+            "~/.emacs.d/elpa/multiple-cursors-1.5.0/rectangular-region-mode.el")))
  '(whitespace-line-column 100)
  '(whitespace-style
    '(face trailing tabs spaces lines-tail space-before-tab space-mark

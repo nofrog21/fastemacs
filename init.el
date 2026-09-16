@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (load custom-file)
 (load "packages.el")
 ;;; globals
