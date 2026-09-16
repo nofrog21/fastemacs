@@ -1,4 +1,3 @@
-(load "custom-lisp.el")
 (load custom-file)
 (load "packages.el")
 ;;; globals
@@ -124,7 +123,10 @@
   :demand t
   :custom
   (magit-commit-show-diff nil)
-  (shell-command-with-editor-mode t))
+  (shell-command-with-editor-mode t)
+  (magit-display-buffer-function 'magit-display-buffer-fullframe-status-v1)
+  :bind
+  (:map magit-mode-map ("SPC" . nil)))
 
 ;;; buffer names
 (use-package uniquify

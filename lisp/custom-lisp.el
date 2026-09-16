@@ -35,3 +35,34 @@
     (call-interactively 'cd)
     (call-interactively 'compile))
   )
+
+(defun evil-ex-start-search-with-region-string ()
+    (let ((selection (with-current-buffer (other-buffer (current-buffer) 1)
+                       (when (evil-visual-state-p)
+                         (let ((selection (buffer-substring-no-properties (region-beginning)
+                                                                          (1+ (region-end)))))
+                           (evil-normal-state)
+                           selection)))))
+      (when selection
+        (evil-ex-remove-default)
+        (insert selection)
+        (evil-ex-search-activate-highlight (list selection
+                                                 evil-ex-search-count
+                                                 evil-ex-search-direction)))))
+(defun evil-ex-search-word-backward-advice (old-func count &optional symbol)
+    (if (evil-visual-state-p)
+        (let ((region (buffer-substring-no-properties
+                       (region-beginning) (1+ (region-end)))))
+          (setq evil-ex-search-pattern region)
+          (deactivate-mark)
+          (evil-ex-search-full-pattern region count 'backward))
+      (apply old-func count symbol)))
+
+(defun evil-ex-search-word-forward-advice (old-func count &optional symbol)
+    (if (evil-visual-state-p)
+        (let ((region (buffer-substring-no-properties
+                       (region-beginning) (1+ (region-end)))))
+          (setq evil-ex-search-pattern region)
+          (deactivate-mark)
+          (evil-ex-search-full-pattern region count 'forward))
+      (apply old-func count symbol)))

@@ -1,3 +1,5 @@
+(load "custom-lisp.el")
+
 ;; packages
 (require 'package)
 (package-activate-all)
@@ -12,11 +14,17 @@
   :init
   (setq evil-want-keybinding nil)
   (setq evil-respect-visual-line-mode t)
+  (setq evil-search-module 'evil-search)
   :custom
   (evil-undo-system 'undo-redo)
+  (evil-split-window-below t)
+  (evil-vsplit-window-right t)
   :hook
   (after-init . evil-mode)
   :config
+  (advice-add #'evil-ex-search-word-backward :around #'evil-ex-search-word-backward-advice)
+  (advice-add #'evil-ex-search-word-forward :around #'evil-ex-search-word-forward-advice)
+  (advice-add #'evil-ex-search-setup :after #'evil-ex-start-search-with-region-string)
   (define-prefix-command 'my-leader-map)
   (keymap-set evil-motion-state-map "SPC" 'my-leader-map)
   (keymap-set evil-normal-state-map "SPC" 'my-leader-map)
