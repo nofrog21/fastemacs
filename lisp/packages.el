@@ -18,12 +18,15 @@
   (evil-undo-system 'undo-redo)
   (evil-split-window-below t)
   (evil-vsplit-window-right t)
+  (evil-cjk-emacs-word-boundary t)
   :hook
   (after-init . evil-mode)
   :config
   (advice-add #'evil-ex-search-word-backward :around #'evil-ex-search-word-backward-advice)
   (advice-add #'evil-ex-search-word-forward :around #'evil-ex-search-word-forward-advice)
   (advice-add #'evil-ex-search-setup :after #'evil-ex-start-search-with-region-string)
+  (advice-add #'forward-evil-word :around #'my/c-forward-evil-word)
+  (advice-add #'forward-evil-WORD :around #'my/c-forward-evil-WORD)
   (define-prefix-command 'my-leader-map)
   (keymap-set evil-motion-state-map "SPC" 'my-leader-map)
   (keymap-set evil-normal-state-map "SPC" 'my-leader-map)
@@ -96,7 +99,9 @@
   (add-to-list 'eglot-server-programs '((zig-mode) . ("zls"))))
 
 (use-package zig-mode
-  :demand t)
+  :demand t
+  :hook
+  (zig-mode . subword-mode))
 
 (use-package org
   :demand t

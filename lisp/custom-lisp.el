@@ -67,3 +67,20 @@
           (deactivate-mark)
           (evil-ex-search-full-pattern region count 'forward))
       (apply old-func count symbol)))
+
+(defun my/c-forward-chars-only (chars count)
+  (evil-forward-nearest
+   count
+   (lambda (&optional cnt)
+     (evil-forward-chars chars cnt))
+   #'forward-evil-empty-line))
+
+(defun my/c-forward-evil-word (orig &optional count)
+  (if (derived-mode-p 'c-mode 'c-ts-mode)
+      (my/c-forward-chars-only "[:word:]" count)      ; _ separates words
+    (funcall orig count)))
+
+(defun my/c-forward-evil-WORD (orig &optional count)
+  (if (derived-mode-p 'c-mode 'c-ts-mode)
+      (my/c-forward-chars-only "[:word:]_" count)     ; _ joins words
+    (funcall orig count)))
