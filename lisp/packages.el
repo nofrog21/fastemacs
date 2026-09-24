@@ -18,19 +18,22 @@
   (evil-undo-system 'undo-redo)
   (evil-split-window-below t)
   (evil-vsplit-window-right t)
+  (evil-cjk-emacs-word-boundary t)
   :hook
   (after-init . evil-mode)
   :config
   (advice-add #'evil-ex-search-word-backward :around #'evil-ex-search-word-backward-advice)
   (advice-add #'evil-ex-search-word-forward :around #'evil-ex-search-word-forward-advice)
   (advice-add #'evil-ex-search-setup :after #'evil-ex-start-search-with-region-string)
+  (advice-add #'forward-evil-word :around #'my/c-forward-evil-word)
+  (advice-add #'forward-evil-WORD :around #'my/c-forward-evil-WORD)
   (define-prefix-command 'my-leader-map)
   (keymap-set evil-motion-state-map "SPC" 'my-leader-map)
   (keymap-set evil-normal-state-map "SPC" 'my-leader-map)
   (keymap-set evil-insert-state-map "C-n" nil)
   (keymap-set evil-insert-state-map "C-p" nil)
   (define-key my-leader-map "fo" 'find-file)
-  (define-key my-leader-map "fs" 'save-buffer)
+  (define-key my-leader-map "fs" 'save-some-buffers)
   (define-key my-leader-map "fw" 'write-file)
   (define-key my-leader-map "bs" 'switch-to-buffer)
   (define-key my-leader-map "bk" 'kill-buffer)
@@ -100,7 +103,9 @@
   :config
   (advice-add 'zig--run-cmd :around
             (lambda (f cmd &optional source &rest args)
-              (apply f cmd source (append '("--color" "off") args)))))
+              (apply f cmd source (append '("--color" "off") args))))
+  :hook
+  (zig-mode . subword-mode))
 
 (use-package org
   :demand t
@@ -122,9 +127,10 @@
                             "* %i%?\n  %U" :jump-to-captured t)))
   (org-refile-targets '(("~/Documents/gtd/gtd.org" :maxlevel . 3)
                         ("~/Documents/gtd/someday.org" :level . 1)
-                        ("~/Documents/gtd/tickler.org" :maxlevel . 2)))
+                        ("~/Documents/gtd/tickler.org" :maxlevel . 2)
+                        ("~/Documents/gtd/notes.org" :maxlevel . 3)))
   (org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
-  (org-agenda-follow-indirect t)
+  (org-agenda-follow-indirect nil)
   (org-agenda-start-with-follow-mode t)
   :config
   (define-key my-leader-map "oa" 'org-agenda)
@@ -142,6 +148,10 @@
   (evil-define-key 'normal org-mode-map (kbd "SPC c s") 'org-schedule)
   (evil-define-key 'normal org-mode-map (kbd "SPC c &") 'org-mark-ring-goto)
   (evil-define-key 'normal org-mode-map (kbd "SPC c o") 'org-open-at-point)
+  (evil-define-key 'normal org-mode-map (kbd "SPC c c k") 'org-up-element)
+  (evil-define-key 'normal org-mode-map (kbd "SPC c c j") 'org-down-element)
+  (evil-define-key 'normal org-mode-map (kbd "SPC c c h") 'org-backward-heading-same-level)
+  (evil-define-key 'normal org-mode-map (kbd "SPC c c l") 'org-forward-heading-same-level)
   )
 
 (use-package dabbrev
