@@ -96,7 +96,11 @@
   (add-to-list 'eglot-server-programs '((zig-mode) . ("zls"))))
 
 (use-package zig-mode
-  :demand t)
+  :demand t
+  :config
+  (advice-add 'zig--run-cmd :around
+            (lambda (f cmd &optional source &rest args)
+              (apply f cmd source (append '("--color" "off") args)))))
 
 (use-package org
   :demand t
