@@ -55,4 +55,3 @@
 (push '(vertical-scroll-bars) default-frame-alist)
 (push '(horizontal-scroll-bars) default-frame-alist)
 (setq scroll-bar-mode nil)
-

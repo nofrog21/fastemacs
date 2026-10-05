@@ -124,14 +124,14 @@
                             "* %i%?\n  %U")
                            ("n" "Note" entry
                             (file+headline "~/Documents/gtd/notes.org" "Notes")
-                            "* %i%?\n  %U" :jump-to-captured t)))
+                            "* %i%?\n  %U")))
   (org-refile-targets '(("~/Documents/gtd/gtd.org" :maxlevel . 3)
                         ("~/Documents/gtd/someday.org" :level . 1)
                         ("~/Documents/gtd/tickler.org" :maxlevel . 2)
                         ("~/Documents/gtd/notes.org" :maxlevel . 3)))
   (org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
   (org-agenda-follow-indirect nil)
-  (org-agenda-start-with-follow-mode t)
+  (org-agenda-start-with-follow-mode nil)
   :config
   (define-key my-leader-map "oa" 'org-agenda)
   (define-key my-leader-map "oc" 'org-capture)
@@ -202,10 +202,15 @@
 
 (use-package dired
   :ensure nil
+  :custom
+  (dired-listing-switches "-Alh")
+  (dired-dwim-target 1)
   :bind
   (:map dired-mode-map
         ("SPC" . nil)
-        ("<normal-state> SPC" . nil)))
+        ("<normal-state> SPC" . nil))
+  :hook
+  (dired-mode . (lambda () (setq truncate-lines t))))
 
 (use-package help
   :ensure nil

@@ -9,25 +9,22 @@
   (bidi-paragraph-direction 'left-to-right)
   (enable-recursive-minibuffers t)
   (align-to-tab-stop nil)
-  (tab-always-indent t)
-  :config
-  (global-visual-line-mode t)
-  )
+  (tab-always-indent t))
 
 (use-package display-line-numbers
   :custom
-  (display-line-numbers-type 'visual)
+  (display-line-numbers-type 'relative)
   (display-line-numbers-current-absolute t)
   :hook
   (after-init . global-display-line-numbers-mode))
 
 ;;; misc
-(setq dired-listing-switches "-Alh")
-(setq dired-dwim-target 1)
 (setq font-lock-maximum-deciration 2)
 (setq treesit-font-lock-level 2)
 (setq imenu-flatten 'annotation)
 (setq isearch-repeat-on-direction-change t)
+(setq comint-inhibit-carriage-motion t)
+(setq-default buffer-file-coding-system 'utf-8-unix)
 
 (use-package icomplete
   :custom
