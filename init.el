@@ -67,7 +67,7 @@
   (compile-command nil)
   (compilation-disable-input t)
   :hook
-  (compilation-filter . ansi-color-compilation-filter)
+  (compilation-filter . (lambda () (ansi-color-apply-on-region (point-min) (point-max))))
   :config
   (add-to-list 'display-buffer-alist '(display-buffer-compilation-mode-p
                                        (display-buffer-at-bottom
