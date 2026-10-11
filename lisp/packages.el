@@ -5,11 +5,9 @@
 (add-to-list 'package-archives '("MELPA" . "http://melpa.org/packages/"))
 (setq package-install-upgrade-built-in nil)
 (require 'use-package)
-(setq use-package-always-ensure t)
 
 (use-package evil
-  :demand t
-  :bind
+  :ensure t
   :init
   (setq evil-want-keybinding nil)
   (setq evil-respect-visual-line-mode t)
@@ -47,30 +45,17 @@
  )
 
 (use-package evil-collection
+  :ensure t
   :config
   (evil-collection-init '(org-agenda org dired magit help compile xref)))
 
 (use-package markdown-mode
+  :ensure t
   :mode ("README\\.md\\'" . gfm-mode)
   :custom (markdown-command "pandoc"))
 
-(use-package fzf
-  :bind
-    ;; Don't forget to set keybinds!
-  :config
-  (setq fzf/args "-x --color=base16 --print-query --margin=1,0 --no-hscroll --ansi"
-        fzf/executable "fzf"
-        fzf/git-grep-args "-i --line-number %s"
-        ; command used for `fzf-grep-*` functions
-        ;; example usage for ripgrep:
-        ;; fzf/grep-command "rg --no-heading -nH --color=always"
-        fzf/grep-command "grep -nrH --color=always"
-        ;; If nil, the fzf buffer will appear at the top of the window
-        fzf/maximize t
-        fzf/position-bottom nil
-        fzf/window-height 15))
-
 (use-package multiple-cursors
+  :ensure t
   :bind
   (("C-S-c C-S-c" . 'mc/edit-lines)
    ("C->"         . 'mc/mark-next-like-this)
@@ -80,6 +65,7 @@
    ("C-:"         . 'mc/skip-to-previous-like-this)))
 
 (use-package corfu
+  :ensure t
   :hook
   (after-init . global-corfu-mode))
 
@@ -99,7 +85,7 @@
   (add-to-list 'eglot-server-programs '((zig-mode) . ("zls"))))
 
 (use-package zig-mode
-  :demand t
+  :ensure t
   :config
   (advice-add 'zig--run-cmd :around
             (lambda (f cmd &optional source &rest args)
@@ -108,7 +94,6 @@
   (zig-mode . subword-mode))
 
 (use-package org
-  :demand t
   :mode ("\\.org\\'" . org-mode)
   :custom
   (org-startup-folded t)
@@ -167,7 +152,7 @@
   (add-to-list 'dabbrev-ignored-buffer-modes 'tags-table-mode))
 
 (use-package cape
-  :demand t
+  :ensure t
   :config
   (define-key my-leader-map "cp" cape-prefix-map)
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
@@ -175,6 +160,7 @@
   (add-to-list 'completion-at-point-functions #'cape-elisp-block))
 
 (use-package marginalia
+  :ensure t
   :bind
   (:map minibuffer-local-map
         ("M-A" . marginalia-cycle))
@@ -197,11 +183,11 @@
   (after-init . savehist-mode))
 
 (use-package whitespace
+  :ensure t
   :hook
   (prog-mode . (lambda () (whitespace-mode 1))))
 
 (use-package dired
-  :ensure nil
   :custom
   (dired-listing-switches "-Alh")
   (dired-dwim-target 1)
@@ -213,8 +199,91 @@
   (dired-mode . (lambda () (setq truncate-lines t))))
 
 (use-package help
-  :ensure nil
   :bind
   (:map help-mode-map
         ("SPC" . nil)
         ("<normal-state> SPC" . nil)))
+
+(use-package emacs
+  :custom
+  (tab-width 8)
+  (indent-tabs-mode nil)
+  (bidi-paragraph-direction 'left-to-right)
+  (enable-recursive-minibuffers t)
+  (align-to-tab-stop nil)
+  (tab-always-indent t))
+
+(use-package display-line-numbers
+  :custom
+  (display-line-numbers-type 'relative)
+  (display-line-numbers-current-absolute t)
+  :hook
+  (after-init . global-display-line-numbers-mode))
+
+(use-package icomplete
+  :custom
+  (icomplete-show-matches-on-no-input t)
+  :bind
+  (:map icomplete-minibuffer-map
+        ("RET" . icomplete-fido-exit)
+        ("TAB" . icomplete-force-complete))
+  :hook
+  (icomplete-minibuffer-setup . (lambda () (setq truncate-lines t)))
+  (after-init . icomplete-vertical-mode))
+
+(use-package compile
+  :custom
+  (compilation-scroll-output 'first-error)
+  (compile-command nil)
+  (compilation-disable-input t)
+  :hook
+  (compilation-filter . ansi-color-compilation-filter)
+  :config
+  (add-to-list 'compilation-environment "NO_COLOR"))
+
+(use-package project
+  :custom
+  (project-file-history-behavior 'relativize))
+
+(use-package cc-mode
+  :custom
+  (c-basic-offset tab-width)
+  :hook
+  (c-mode . (lambda () (electric-indent-mode -1)))
+  (c++-mode . (lambda () (electric-indent-mode -1)))
+  :config
+  (c-add-style "openbsd"
+               '("bsd"
+                 (c-backspace-function . delete-backward-char)
+                 (c-syntactic-indentation-in-macros . nil)
+                 (c-tab-always-indent . t)
+                 (c-auto-align-backslashes . nil)
+                 (c-hanging-braces-alist
+                  (block-close . c-snug-do-while))
+                 (c-offsets-alist
+                  (arglist-cont-nonempty . *)
+                  (statement-cont . *))
+                 (indent-tabs-mode . t)))
+  (setq c-default-style "openbsd"))
+
+(use-package magit
+  :ensure t
+  :demand t
+  :custom
+  (magit-commit-show-diff nil)
+  (shell-command-with-editor-mode t)
+  (magit-display-buffer-function 'magit-display-buffer-fullframe-status-v1)
+  :bind
+  (:map magit-mode-map ("SPC" . nil)))
+
+;;; buffer names
+(use-package uniquify
+  :custom
+  (uniquify-buffer-name-style 'forward))
+
+;;; grep
+(use-package grep
+  :custom
+  ;; (grep-command "grep --color=always -nH -r ")
+  (grep-command "rg --no-heading --color=always -nH ")
+  (grep-use-null-device nil))

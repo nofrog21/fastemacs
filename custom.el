@@ -7,7 +7,10 @@
  '(eaf-webengine-font-family "IosevkaFixed Nerd Font Extended")
  '(font-lock-maximum-decoration 2)
  '(mc/always-run-for-all t)
- '(package-selected-packages nil)
+ '(package-selected-packages
+   '(cape corfu evil evil-collection fancy-compilation fzf
+          goto-last-change magit marginalia markdown-mode
+          multiple-cursors rust-mode zig-mode))
  '(project-buffers-viewer 'project-list-buffers-ibuffer)
  '(safe-local-variable-values
    '((eval when (fboundp 'rainbow-mode) (rainbow-mode 1))
