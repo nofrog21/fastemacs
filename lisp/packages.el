@@ -75,7 +75,8 @@
                                        :signatureHelpProvider
                                        :documentHighlightProvider
                                        :inlayHintProvider
-                                       :codeActionProvider))
+                                       :codeActionProvider
+                                       :semanticTokensProvider))
   :config
   (add-to-list 'eglot-server-programs '((c++-mode c-mode c-ts-mode c++-ts-mode) .
                                         ("clangd"
@@ -211,7 +212,8 @@
   (bidi-paragraph-direction 'left-to-right)
   (enable-recursive-minibuffers t)
   (align-to-tab-stop nil)
-  (tab-always-indent t))
+  (tab-always-indent t)
+  (scroll-preserve-screen-position t))
 
 (use-package display-line-numbers
   :custom
