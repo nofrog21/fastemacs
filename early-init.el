@@ -46,6 +46,7 @@
 (setq ring-bell-function 'ignore)
 (setq url-proxy-services '(("http"  .  "127.0.0.1:10808")
 			   ("https" .  "127.0.0.1:10808")))
+(setq gc-cons-threshold most-positive-fixnum)
 (setq recenter-redisplay nil)
 (push '(menu-bar-lines . 0) default-frame-alist)
 (setq menu-bar-mode nil)

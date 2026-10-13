@@ -16,23 +16,6 @@
 (setq comint-inhibit-carriage-motion nil)
 (setq-default buffer-file-coding-system 'utf-8-unix)
 
-;;; completion
-(setq completion-category-overrides
-      '((buffer
-	     (styles . (basic flex))
-	     (cycle  . 10))
-	    (file
-	     (styles . (initials flex))
-	     (cycle  . 10))
-	    (symbol-help
-	     (styles basic shorthand substring))))
-(setq completion-auto-select nil)
-(setq completion-show-help nil)
-(setq completion-auto-help nil)
-(setq completions-sort 'historical)
-(add-to-list 'completion-ignored-extensions "./")
-(add-to-list 'completion-ignored-extensions "../")
-
 ;;; mode-line
 (setq-default mode-line-format '("%e" mode-line-front-space
                                  (:propertize
@@ -93,10 +76,23 @@
   :config
   (evil-collection-init '(org-agenda org dired magit help compile xref)))
 
+(use-package completion-preview
+  :custom
+  (completion-preview-minimum-symbol-length 3)
+  (completion-preview-idle-delay 0.2)
+  :bind
+  (:map completion-preview-active-mode-map
+        ("C-n" . #'completion-preview-next-candidate)
+        ("C-p" . #'completion-preview-prev-candidate))
+  :hook
+  (after-init . global-completion-preview-mode))
+
 (use-package markdown-mode
   :ensure t
   :mode ("README\\.md\\'" . gfm-mode)
-  :custom (markdown-command "pandoc"))
+  :custom (markdown-command "pandoc")
+  :hook
+  (markdown-mode . auto-fill-mode))
 
 (use-package multiple-cursors
   :ensure t
@@ -182,7 +178,8 @@
   (evil-define-key 'normal org-mode-map (kbd "SPC c c j") 'org-down-element)
   (evil-define-key 'normal org-mode-map (kbd "SPC c c h") 'org-backward-heading-same-level)
   (evil-define-key 'normal org-mode-map (kbd "SPC c c l") 'org-forward-heading-same-level)
-  )
+  :hook
+  (org-mode . auto-fill-mode))
 
 (use-package dabbrev
   :bind (("M-/"   . completion-at-point)
@@ -199,7 +196,6 @@
 (use-package cape
   :ensure t
   :config
-  (define-key my-leader-map "cp" cape-prefix-map)
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-file)
   (add-to-list 'completion-at-point-functions #'cape-elisp-block))
@@ -272,12 +268,20 @@
   (read-process-output-max (* 4 1024 1024))
   (save-interprogram-paste-before-kill t)
   (kill-do-not-save-duplicates t)
-  (help-window-select t))
+  (help-window-select t)
+  (fill-column 80)
+  :hook
+  (emacs-startup . (lambda () (setq gc-cons-threshold (* 50 1024 1024)))))
+
+(use-package which-key
+  :hook
+  (after-init . which-key-mode))
 
 (use-package display-line-numbers
   :custom
   (display-line-numbers-type 'relative)
   (display-line-numbers-current-absolute t)
+  (display-line-numbers-width-start t)
   :hook
   (after-init . global-display-line-numbers-mode))
 
