@@ -23,7 +23,6 @@
                                    mode-line-window-dedicated))
                                  "  %b"
                                  mode-line-format-right-align
-                                 mode-line-misc-info
                                  (project-mode-line project-mode-line-format)
                                  " "
                                  (vc-mode vc-mode)
