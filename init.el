@@ -135,6 +135,7 @@
 
 (use-package org
   :mode ("\\.org\\'" . org-mode)
+  :demand t
   :custom
   (org-startup-folded t)
   (org-agenda-todo-list-sublevels nil)
@@ -296,6 +297,10 @@
   (after-init . icomplete-vertical-mode))
 
 (use-package compile
+  :bind
+  (:map compilation-mode-map
+        ("SPC" . nill)
+        ("<normal-state> SPC . k" . kill-compilation))
   :custom
   (compilation-scroll-output 'first-error)
   (compile-command nil)
