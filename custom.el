@@ -6,15 +6,15 @@
  ;; If there is more than one, they won't work right.
  '(eaf-webengine-font-family "IosevkaFixed Nerd Font Extended")
  '(font-lock-maximum-decoration 2)
+ '(imenu-auto-rescan t)
  '(mc/always-run-for-all t)
  '(package-selected-packages
-   '(cape corfu evil evil-collection fancy-compilation fzf
-          goto-last-change magit marginalia markdown-mode
-          multiple-cursors rust-mode zig-mode))
+   '(cape corfu evil evil-collection fancy-compilation fzf ghostel goto-last-change
+          magit marginalia markdown-mode multiple-cursors rust-mode zig-mode))
  '(project-buffers-viewer 'project-list-buffers-ibuffer)
  '(safe-local-variable-values
-   '((eval when (fboundp 'rainbow-mode) (rainbow-mode 1))
-     (c-default-offset . 4) (c-default-style . "k&r")))
+   '((eval when (fboundp 'rainbow-mode) (rainbow-mode 1)) (c-default-offset . 4)
+     (c-default-style . "k&r")))
  '(uxntal-uxnasm-path "uxn2 /home/ivan/opt/uxn2/etc/utils/drifblim.rom")
  '(uxntal-uxnemu-path "uxn2")
  '(warning-suppress-types
@@ -22,8 +22,7 @@
             "~/.emacs.d/elpa/multiple-cursors-1.5.0/rectangular-region-mode.el")))
  '(whitespace-line-column 100)
  '(whitespace-style
-   '(face trailing tabs spaces lines-tail space-before-tab space-mark
-          tab-mark))
+   '(face trailing tabs spaces lines-tail space-before-tab space-mark tab-mark))
  '(with-editor-sleeping-editor
    "bash -c 'printf \"\\nWITH-EDITOR: $$ OPEN $0\\037$1\\037 IN $(pwd)\\n\"; sleep 604800 & sleep=$!; trap \"kill $sleep; exit 0\" USR1; trap \"kill $sleep; exit 1\" USR2; wait $sleep'"))
 (custom-set-faces

@@ -15,7 +15,9 @@
 (setq isearch-repeat-on-direction-change t)
 (setq comint-inhibit-carriage-motion nil)
 (setq-default buffer-file-coding-system 'utf-8-unix)
-
+(when (eq system-type 'windows-nt)
+  (setq w32-get-true-file-attributes nil      ; Decrease file IO workload
+        w32-pipe-buffer-size (* 128 1024)))
 ;;; mode-line
 (setq-default mode-line-format '("%e" mode-line-front-space
                                  (:propertize
@@ -54,6 +56,7 @@
   (keymap-set evil-motion-state-map "SPC" 'my-leader-map)
   (keymap-set evil-normal-state-map "SPC" 'my-leader-map)
   (keymap-set evil-motion-state-map "C-w o" #'toggle-delete-other-windows)
+  (keymap-set evil-motion-state-map "C-w u" 'winner-undo)
   (keymap-set evil-insert-state-map "C-n" nil)
   (keymap-set evil-insert-state-map "C-p" nil)
   (define-key my-leader-map "fo" 'find-file)
@@ -224,6 +227,8 @@
   (after-init . savehist-mode))
 
 (use-package winner
+  :custom
+  (winner-ring-size 10)
   :hook
   (after-init . winner-mode))
 
