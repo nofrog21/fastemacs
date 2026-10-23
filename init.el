@@ -261,6 +261,7 @@
   (:map minibuffer-local-filename-completion-map
         ("C-l" . #'up-directory))
   :custom
+  (use-short-answers t)
   (tab-width 8)
   (indent-tabs-mode nil)
   (bidi-paragraph-direction 'left-to-right)
