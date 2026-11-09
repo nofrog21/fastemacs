@@ -8,6 +8,9 @@
  '(font-lock-maximum-decoration 2)
  '(imenu-auto-rescan t)
  '(mc/always-run-for-all t)
+ '(org-fold-show-context-detail
+   '((agenda . minimal) (bookmark-jump . lineage) (isearch . lineage)
+     (default . ancestors)))
  '(package-selected-packages
    '(cape corfu evil evil-collection fancy-compilation fzf ghostel goto-last-change
           magit marginalia markdown-mode multiple-cursors rust-mode zig-mode))
