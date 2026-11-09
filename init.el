@@ -165,6 +165,7 @@
   (define-key my-leader-map "oa" 'org-agenda)
   (define-key my-leader-map "oc" 'org-capture)
   (define-key my-leader-map "os" 'org-store-link)
+  (define-key my-leader-map "on" (lambda () (interactive) (find-file "~/Documents/gtd/notes.org")))
   (evil-define-key 'normal org-mode-map (kbd "SPC c $") 'org-archive-subtree)
   (evil-define-key 'normal org-mode-map (kbd "SPC c $") 'org-archive-subtree)
   (evil-define-key 'normal org-mode-map (kbd "SPC c #") 'org-update-statistics-cookies)
@@ -182,7 +183,8 @@
   (evil-define-key 'normal org-mode-map (kbd "SPC c c h") 'org-backward-heading-same-level)
   (evil-define-key 'normal org-mode-map (kbd "SPC c c l") 'org-forward-heading-same-level)
   :hook
-  (org-mode . auto-fill-mode))
+  (org-mode . auto-fill-mode)
+  (org-agenda-after-show . my/org-agenda-show-next-not-done))
 
 (use-package dabbrev
   :bind (("M-/"   . completion-at-point)

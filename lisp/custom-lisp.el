@@ -92,3 +92,14 @@
   (if (derived-mode-p 'c++-mode 'c++-ts-mode 'c-mode 'c-ts-mode 'zig-mode)
       (my/c-forward-chars-only "[:word:]_" count)     ; _ joins words
     (funcall orig count)))
+
+(defun my/org-agenda-show-next-not-done ()
+    "Like the `local' context, but the revealed next heading skips DONE ones."
+    (save-excursion
+      (org-back-to-heading t)
+      (outline-next-heading)
+      ;; Skip DONE headings (and their subtrees)
+      (while (and (org-at-heading-p) (org-entry-is-done-p))
+        (org-end-of-subtree t t))
+      (when (org-at-heading-p)
+        (org-fold-heading nil))))
