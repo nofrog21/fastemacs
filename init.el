@@ -147,13 +147,13 @@
                       "~/Documents/gtd/tickler.org"))
   (org-capture-templates '(("t" "Todo [inbox]" entry
                             (file+headline "~/Documents/gtd/inbox.org" "Tasks")
-                            "* TODO %i%?")
+                            "* TODO %i%?\n  %U")
                            ("T" "Tickler" entry
                             (file+headline "~/Documents/gtd/tickler.org" "Tickler")
-                            "* %i%?\n  %U")
+                            "* %i%?\n")
                            ("n" "Note" entry
                             (file+headline "~/Documents/gtd/notes.org" "Notes")
-                            "* %i%?\n  %U")))
+                            "* %i%?\n")))
   (org-refile-targets '(("~/Documents/gtd/gtd.org" :maxlevel . 3)
                         ("~/Documents/gtd/someday.org" :level . 1)
                         ("~/Documents/gtd/tickler.org" :maxlevel . 2)
